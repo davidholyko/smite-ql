@@ -12,38 +12,36 @@ export const WinLossBar = ({ normal, ranked, overall }) => {
   const lossPercentage = 100 - winPercentage;
 
   return (
-    <div>
-      <Container
-        maxWidth="lg"
+    <Container
+      maxWidth="lg"
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+      }}
+    >
+      <Box
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-        }}
-      >
-        <Box
-          sx={{
-            width: `${winPercentage}%`,
-            height: 25,
+          width: `${winPercentage}%`,
+          height: 25,
+          backgroundColor: 'green',
+          '&:hover': {
             backgroundColor: 'green',
-            '&:hover': {
-              backgroundColor: 'green',
-              opacity: [0.9, 0.8, 0.7],
-            },
-          }}
-        />
-        <Box
-          sx={{
-            width: `${lossPercentage}%`,
-            height: 25,
+            opacity: [0.9, 0.8, 0.7],
+          },
+        }}
+      />
+      <Box
+        sx={{
+          width: `${lossPercentage}%`,
+          height: 25,
+          backgroundColor: 'red',
+          '&:hover': {
             backgroundColor: 'red',
-            '&:hover': {
-              backgroundColor: 'red',
-              opacity: [0.9, 0.8, 0.7],
-            },
-          }}
-        />
-      </Container>
-    </div>
+            opacity: [0.9, 0.8, 0.7],
+          },
+        }}
+      />
+    </Container>
   );
 };
 
