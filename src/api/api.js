@@ -35,6 +35,18 @@ class SmiteConnector {
     const response = await this._processRequest(url);
     return response;
   }
+
+  async getGods() {
+    const url = `${URL}/${SMITE_QL}?path=global.gods`;
+    const response = await this._processRequest(url);
+    return response;
+  }
+
+  async getItems() {
+    const url = `${URL}/${SMITE_QL}?path=global.items`;
+    const response = await this._processRequest(url);
+    return response;
+  }
 }
 
 export const smiteConnector = new SmiteConnector();
