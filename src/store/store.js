@@ -4,7 +4,7 @@ import { reducers } from '../reducers';
 
 export const store = configureStore({
   reducer: {
-    gods: reducers.godsReducer,
-    items: reducers.itemsReducer,
+    global: reducers.globalReducer,
+    player: reducers.playerReducer,
   },
 });

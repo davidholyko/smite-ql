@@ -5,13 +5,11 @@ import { Home, Player, History, Match } from '../pages';
 
 export const Routes = () => {
   return (
-    <React.Fragment>
-      <Switch>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/player" element={<Player />} />
-        <Route path="/history" element={<History />} />
-        <Route path="/match" element={<Match />} />
-      </Switch>
-    </React.Fragment>
+    <Switch>
+      <Route exact path="/" element={<Home />} />
+      <Route path="/player" element={<Player />} />
+      <Route path="/history" element={<History />} />
+      <Route path="/match" element={<Match />} />
+    </Switch>
   );
 };

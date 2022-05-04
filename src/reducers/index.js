@@ -1,7 +1,7 @@
-import { godsReducer } from './godsReducer';
-import { itemsReducer } from './itemsReducer';
+import { globalReducer } from './globalReducer';
+import { playerReducer } from './playerReducer';
 
 export const reducers = {
-  itemsReducer,
-  godsReducer,
+  globalReducer,
+  playerReducer,
 };
