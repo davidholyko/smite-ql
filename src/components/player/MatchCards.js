@@ -43,7 +43,7 @@ const ItemsList = ({ items, type, patchVersion }) => {
         const usePlaceHolder = !name;
 
         return usePlaceHolder ? (
-          <IconPlaceHolder />
+          <IconPlaceHolder key={id + index} />
         ) : (
           <ItemIcon key={id + index} name={name.replaceAll(' ', '_')} patchVersion={patchVersion} />
         );
