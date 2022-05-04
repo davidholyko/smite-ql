@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
@@ -77,11 +78,34 @@ const MatchCard = ({ matchInfo }) => {
   const godName = matchInfo.god.replaceAll(' ', '_');
   const patchVersion = useSelector((state) => state.global.patchVersion);
   const god = useSelector((state) => state.global.gods[patchVersion][godName]);
+  const kda = `${matchInfo.kills} / ${matchInfo.deaths} / ${matchInfo.assists}`;
 
   return (
-    <Card id="match-card" sx={{ minWidth: '300px', p: '15px', m: '15px', display: 'flex', alignItems: 'center' }}>
-      <Avatar alt={god.Name} src={god.godIcon_URL} sx={{ width: 56, height: 56, marginRight: '10px' }} />
-      <ItemsAndActives items={matchInfo.godItems} actives={matchInfo.godActives} patchVersion={patchVersion} />
+    <Card
+      id="match-card"
+      sx={{
+        minWidth: '300px',
+        p: '15px',
+        m: '15px',
+      }}
+    >
+      <Container sx={{ display: 'flex', alignItems: 'center' }}>
+        <Avatar alt={god.Name} src={god.godIcon_URL} sx={{ width: 56, height: 56, marginRight: '10px' }} />
+        <ItemsAndActives items={matchInfo.godItems} actives={matchInfo.godActives} patchVersion={patchVersion} />
+      </Container>
+      <Container sx={{ display: 'flex', alignItems: 'center' }}>
+        <Typography
+          variant="h6"
+          sx={{
+            backgroundColor: matchInfo.isVictory ? 'green' : 'red',
+            color: 'white',
+            padding: '5px 10px',
+            borderRadius: '5px',
+          }}
+        >
+          {kda}
+        </Typography>
+      </Container>
     </Card>
   );
 };
