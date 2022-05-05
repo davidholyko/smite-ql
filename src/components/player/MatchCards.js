@@ -1,8 +1,10 @@
 import { Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
+import _ from 'lodash';
 import map from 'lodash/map';
 import range from 'lodash/range';
 import PropTypes from 'prop-types';
@@ -74,10 +76,58 @@ ItemsAndActives.propTypes = {
   patchVersion: PropTypes.string,
 };
 
-const MatchCard = ({ matchInfo }) => {
-  const godName = matchInfo.god.replaceAll(' ', '_');
+const GodIcon = ({ godName, sx }) => {
   const patchVersion = useSelector((state) => state.global.patchVersion);
-  const god = useSelector((state) => state.global.gods[patchVersion][godName]);
+  const name = godName.replaceAll(' ', '_');
+  const god = useSelector((state) => state.global.gods[patchVersion][name]);
+
+  return <Avatar alt={god.Name} src={god.godIcon_URL} sx={sx} />;
+};
+
+GodIcon.propTypes = {
+  sx: PropTypes.object,
+  godName: PropTypes.string,
+};
+
+const MatchGods = ({ gods }) => {
+  const id = useId();
+
+  return (
+    <React.Fragment>
+      {_.map(gods, (group, index) => {
+        return (
+          <Box
+            key={id + index}
+            sx={{
+              display: 'flex',
+              border: '1px solid black',
+              borderRadius: '5px',
+              marginX: '5px',
+              padding: '5px',
+              flexDirection: 'column',
+            }}
+          >
+            {_.map(group, (player, index) => {
+              return (
+                <Box key={id + index} sx={{ display: 'flex', width: '250px' }}>
+                  <GodIcon godName={player.god} sx={{ marginRight: '15px' }} />
+                  <Typography variant="h6">{player.ign}</Typography>
+                </Box>
+              );
+            })}
+          </Box>
+        );
+      })}
+    </React.Fragment>
+  );
+};
+
+MatchGods.propTypes = {
+  gods: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)),
+};
+
+const MatchCard = ({ matchInfo }) => {
+  const patchVersion = useSelector((state) => state.global.patchVersion);
   const kda = `${matchInfo.kills} / ${matchInfo.deaths} / ${matchInfo.assists}`;
 
   return (
@@ -90,10 +140,10 @@ const MatchCard = ({ matchInfo }) => {
       }}
     >
       <Container sx={{ display: 'flex', alignItems: 'center' }}>
-        <Avatar alt={god.Name} src={god.godIcon_URL} sx={{ width: 56, height: 56, marginRight: '10px' }} />
-        <ItemsAndActives items={matchInfo.godItems} actives={matchInfo.godActives} patchVersion={patchVersion} />
-      </Container>
-      <Container sx={{ display: 'flex', alignItems: 'center' }}>
+        <GodIcon godName={matchInfo.god} sx={{ width: 56, height: 56, marginRight: 15 }} />
+        <Typography variant="h6" sx={{ marginRight: 15 }}>
+          {matchInfo.god}
+        </Typography>
         <Typography
           variant="h6"
           sx={{
@@ -105,6 +155,19 @@ const MatchCard = ({ matchInfo }) => {
         >
           {kda}
         </Typography>
+      </Container>
+      <Container sx={{ display: 'flex', alignItems: 'center' }}>
+        <ItemsAndActives items={matchInfo.godItems} actives={matchInfo.godActives} patchVersion={patchVersion} />
+      </Container>
+      <Container sx={{ display: 'flex' }}>
+        <Container sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+          <Typography variant="h6">Allies</Typography>
+          <MatchGods gods={matchInfo.allies} />
+        </Container>
+        <Container sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+          <Typography variant="h6">Enemies</Typography>
+          <MatchGods gods={matchInfo.enemies} />
+        </Container>
       </Container>
     </Card>
   );
@@ -130,7 +193,7 @@ MatchCardsList.propTypes = {
   matches: PropTypes.object,
 };
 
-export const MatchCardsContainer = ({ history, matches }) => {
+export const MatchCards = ({ history, matches }) => {
   return (
     <Container
       id="match-cards-container"
@@ -146,7 +209,7 @@ export const MatchCardsContainer = ({ history, matches }) => {
   );
 };
 
-MatchCardsContainer.propTypes = {
+MatchCards.propTypes = {
   history: PropTypes.arrayOf(PropTypes.number),
   matches: PropTypes.object,
 };

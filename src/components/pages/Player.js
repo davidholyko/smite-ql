@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { smiteConnector } from '../../api';
 import { savePlayerInfo } from '../../reducers/playerReducer';
 import { Header } from '../header';
-import { WinLossBar, MatchCardsContainer } from '../player';
+import { WinLossBar, MatchCards } from '../player';
 
 export const Player = () => {
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ export const Player = () => {
         {playerInfo.name}
       </Typography>
       <WinLossBar overall={playerInfo.overall} ranked={playerInfo.ranked} normal={playerInfo.normal} />
-      <MatchCardsContainer matches={playerInfo.matches} history={playerInfo.history} />
+      <MatchCards matches={playerInfo.matches} history={playerInfo.history} />
     </Container>
   );
 };

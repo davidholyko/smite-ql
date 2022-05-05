@@ -9,10 +9,9 @@ const persistConfig = {
   storage,
   version: 1,
   blacklist: [
-    // global contains items and gods data which is 2MB
-    // TODO: figure out what the limit is and whether or not
-    // to blacklist 'global' or 'players'
-    'global',
+    // persist 'global' which contains latest items and gods data
+    // which is 2 MB, local storage limit is 5 MB
+    'players',
   ],
 };
 
