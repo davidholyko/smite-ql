@@ -13,4 +13,5 @@ RUN npm ci
 # Bundle app source
 COPY . .
 
-CMD NODE_ENV=production npm run start
+RUN npm run build
+CMD npx serve -s build
