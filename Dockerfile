@@ -13,6 +13,4 @@ RUN npm ci
 # Bundle app source
 COPY . .
 
-EXPOSE 3000
-RUN npm run build
 CMD NODE_ENV=production npm run start
