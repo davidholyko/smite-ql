@@ -10,9 +10,7 @@ class SmiteConnector {
     const { data } = await axios({ method: 'get', url });
 
     if (!data.success) {
-      console.error(data.message);
-      console.error(data.response);
-      throw new Error(`Request for ${url} failed. See logs`);
+      throw new Error(data.response.message);
     }
 
     return data.response;

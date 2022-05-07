@@ -2,6 +2,7 @@
   "name": "smite-ql",
   "version": "1.7.2",
   "private": true,
+  "homepage": "https://smite-ql.com",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

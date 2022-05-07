@@ -5,9 +5,10 @@ import InputBase from '@mui/material/InputBase';
 import { styled, alpha } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import * as React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Search = styled('div')(({ theme }) => ({
+const SearchWrapper = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -34,7 +35,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
-  '& .MuiInputBase-input': {
+  '#search-form': {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
@@ -50,6 +51,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export const Header = () => {
+  const navigate = useNavigate();
+  const [searchText, setSearchText] = useState('');
+
+  const onChange = (event) => {
+    setSearchText(event.target.value);
+  };
+
+  const onKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      navigate(`/player/${searchText}`);
+    }
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -57,12 +71,19 @@ export const Header = () => {
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
             SmiteQL
           </Typography>
-          <Search>
+          <SearchWrapper>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
-            <StyledInputBase placeholder="Search a player..." inputProps={{ 'aria-label': 'search' }} />
-          </Search>
+            <StyledInputBase
+              id="search-form"
+              onChange={onChange}
+              onKeyDown={onKeyDown}
+              value={searchText}
+              placeholder="Search a player..."
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </SearchWrapper>
         </Toolbar>
       </AppBar>
     </Box>

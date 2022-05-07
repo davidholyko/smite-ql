@@ -4,6 +4,7 @@ import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import { smiteConnector } from '../../api';
 import { savePlayerInfo } from '../../reducers/playerReducer';
@@ -11,14 +12,28 @@ import { Header } from '../header';
 import { WinLossBar, MatchCards } from '../player';
 
 export const Player = () => {
+  const { playerId } = useParams();
+
   const dispatch = useDispatch();
-  const playerInfo = useSelector((state) => get(state, `player.player.dhko`, {}));
+  const playerInfo = useSelector((state) => get(state, `player.player.${playerId}`, {}));
   const patchVersion = useSelector((state) => get(state, `global.patchVersion`));
 
   useEffect(() => {
     const fetchData = async () => {
-      const playerInfo = await smiteConnector.getPlayerInfo('dhko');
-      dispatch(savePlayerInfo({ ...playerInfo, name: 'dhko' }));
+      let playerInfo;
+
+      // TODO: refactor this...
+      // Try 1: get player id (success if already exists)
+      // Try 2: get player id (success if we can fetch new data)
+      // Try 3: render a player does not exist page
+      try {
+        playerInfo = await smiteConnector.getPlayerInfo(playerId);
+      } catch (error) {
+        if (error.message === `ERR Path '$.players.${playerId}' does not exist`)
+          // if player info doesn't exist, force an update in the server
+          playerInfo = await smiteConnector.getPlayerInfo(playerId, true);
+      }
+      dispatch(savePlayerInfo({ ...playerInfo, name: playerId }));
     };
 
     fetchData();
