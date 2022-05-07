@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes as Switch } from 'react-router-dom';
 
-import { Home, Player, History, Match } from '../pages';
+import { Home, Player, History, Match, NotFound } from '../pages';
 
 export const Routes = () => {
   return (
@@ -12,6 +12,7 @@ export const Routes = () => {
       </Route>
       <Route path="/history" element={<History />} />
       <Route path="/match" element={<Match />} />
+      <Route path="/*" element={<NotFound />} />
     </Switch>
   );
 };
