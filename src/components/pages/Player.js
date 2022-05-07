@@ -1,3 +1,4 @@
+import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import get from 'lodash/get';
@@ -12,25 +13,33 @@ import { Header } from '../header';
 import { WinLossBar, MatchCards } from '../player';
 
 export const Player = () => {
-  const { playerId } = useParams();
   const dispatch = useDispatch();
+  const { playerId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(false);
 
   const playerInfo = useSelector((state) => get(state, `player.player.${playerId}`, {}));
   const patchVersion = useSelector((state) => get(state, `global.patchVersion`));
 
+  const fetchData = async () => {
+    setIsLoading(true);
+    const playerInfo = await smiteConnector.getPlayerInfo(playerId);
+    playerInfo && dispatch(savePlayerInfo({ ...playerInfo, name: playerId }));
+    setIsLoading(false);
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      const playerInfo = await smiteConnector.getPlayerInfo(playerId);
-      playerInfo && dispatch(savePlayerInfo({ ...playerInfo, name: playerId }));
-      setIsLoading(false);
-    };
-
     fetchData();
 
-    return () => {};
+    return () => {
+      setIsUpdated(false);
+    };
   }, [playerId]);
+
+  const onClick = async () => {
+    const playerInfo = await smiteConnector.getPlayerInfo(playerId, true);
+    playerInfo && dispatch(savePlayerInfo({ ...playerInfo, name: playerId }));
+    setIsUpdated(true);
+  };
 
   const renderContent = () => {
     if (isLoading) {
@@ -61,6 +70,17 @@ export const Player = () => {
   return (
     <Container sx={{ p: [0] }}>
       <Header />
+      {!isUpdated && !isLoading && (
+        <Container sx={{ backgroundColor: 'lightgray', padding: '10px 15px', display: 'flex' }}>
+          <Typography variant="subtitle2">
+            Are you looking for a more recent match? Trigger an update by clicking the button.
+          </Typography>
+
+          <Button variant="contained" sx={{ marginLeft: 'auto' }} onClick={onClick}>
+            Update Player Info
+          </Button>
+        </Container>
+      )}
       {renderContent()}
     </Container>
   );
