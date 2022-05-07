@@ -24,7 +24,17 @@ class SmiteConnector {
 
   async getPlayerInfo(playerId, forceUpdate = false) {
     const url = `${URL}/${HISTORY}?player=${playerId}&forceUpdate=${forceUpdate}`;
-    const response = await this._processRequest(url);
+    let response;
+
+    try {
+      response = await this._processRequest(url);
+    } catch (error) {
+      // if player info doesnt exist, try again with latest data
+      if (error.message === `ERR Path '$.players.${playerId}' does not exist`) {
+        response = await this.getPlayerInfo(playerId, true);
+      }
+    }
+
     return response;
   }
 

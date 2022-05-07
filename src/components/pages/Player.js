@@ -2,7 +2,7 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -13,47 +13,55 @@ import { WinLossBar, MatchCards } from '../player';
 
 export const Player = () => {
   const { playerId } = useParams();
-
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+
   const playerInfo = useSelector((state) => get(state, `player.player.${playerId}`, {}));
   const patchVersion = useSelector((state) => get(state, `global.patchVersion`));
 
   useEffect(() => {
     const fetchData = async () => {
-      let playerInfo;
-
-      // TODO: refactor this...
-      // Try 1: get player id (success if already exists)
-      // Try 2: get player id (success if we can fetch new data)
-      // Try 3: render a player does not exist page
-      try {
-        playerInfo = await smiteConnector.getPlayerInfo(playerId);
-      } catch (error) {
-        if (error.message === `ERR Path '$.players.${playerId}' does not exist`)
-          // if player info doesn't exist, force an update in the server
-          playerInfo = await smiteConnector.getPlayerInfo(playerId, true);
-      }
-      dispatch(savePlayerInfo({ ...playerInfo, name: playerId }));
+      setIsLoading(true);
+      const playerInfo = await smiteConnector.getPlayerInfo(playerId);
+      playerInfo && dispatch(savePlayerInfo({ ...playerInfo, name: playerId }));
+      setIsLoading(false);
     };
 
     fetchData();
 
     return () => {};
-  }, []);
+  }, [playerId]);
 
-  if (isEmpty(playerInfo) || isEmpty(patchVersion)) {
-    // TODO: make a placeholder component
-    return <Container>Placeholder</Container>;
-  }
+  const renderContent = () => {
+    if (isLoading) {
+      // TODO: make a placeholder component
+      return <Container>SmiteQL is thinking... Please wait a moment.</Container>;
+    }
+
+    if (isEmpty(playerInfo) || isEmpty(patchVersion)) {
+      // TODO: make a placeholder component
+      return (
+        <Container>Player {playerId} was not found. Current version of SmiteQL only supports PC players.</Container>
+      );
+    }
+
+    isLoading;
+
+    return (
+      <React.Fragment>
+        <Typography variant="h3" component="h3" sx={{ textAlign: 'center' }}>
+          {playerInfo.name}
+        </Typography>
+        <WinLossBar overall={playerInfo.overall} ranked={playerInfo.ranked} normal={playerInfo.normal} />
+        <MatchCards matches={playerInfo.matches} history={playerInfo.history} />
+      </React.Fragment>
+    );
+  };
 
   return (
     <Container sx={{ p: [0] }}>
       <Header />
-      <Typography variant="h3" component="h3" sx={{ textAlign: 'center' }}>
-        {playerInfo.name}
-      </Typography>
-      <WinLossBar overall={playerInfo.overall} ranked={playerInfo.ranked} normal={playerInfo.normal} />
-      <MatchCards matches={playerInfo.matches} history={playerInfo.history} />
+      {renderContent()}
     </Container>
   );
 };

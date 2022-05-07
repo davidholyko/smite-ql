@@ -139,34 +139,40 @@ const MatchCard = ({ matchInfo }) => {
         m: '15px',
       }}
     >
-      <Container sx={{ display: 'flex', alignItems: 'center' }}>
-        <GodIcon godName={matchInfo.god} sx={{ width: 56, height: 56, marginRight: 15 }} />
-        <Typography variant="h6" sx={{ marginRight: 15 }}>
-          {matchInfo.god}
-        </Typography>
+      <Container>
         <Typography
           variant="h6"
-          sx={{
-            backgroundColor: matchInfo.isVictory ? 'green' : 'red',
-            color: 'white',
-            padding: '5px 10px',
-            borderRadius: '5px',
-          }}
+          sx={{ backgroundColor: matchInfo.isVictory ? 'green' : 'red', color: 'white', padding: '0px 5px' }}
         >
-          {kda}
+          Match ID: {matchInfo.matchId}
         </Typography>
-      </Container>
-      <Container sx={{ display: 'flex', alignItems: 'center' }}>
-        <ItemsAndActives items={matchInfo.godItems} actives={matchInfo.godActives} patchVersion={patchVersion} />
-      </Container>
-      <Container sx={{ display: 'flex' }}>
-        <Container sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-          <Typography variant="h6">Allies</Typography>
-          <MatchGods gods={matchInfo.allies} />
+        <Container sx={{ display: 'flex', alignItems: 'center' }}>
+          <GodIcon godName={matchInfo.god} sx={{ width: 56, height: 56, marginRight: 15 }} />
+          <Typography variant="h6" sx={{ marginRight: 15 }}>
+            {matchInfo.god}
+          </Typography>
+          <Typography
+            variant="h6"
+            sx={{
+              padding: '5px 10px',
+              borderRadius: '5px',
+            }}
+          >
+            {kda}
+          </Typography>
         </Container>
-        <Container sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-          <Typography variant="h6">Enemies</Typography>
-          <MatchGods gods={matchInfo.enemies} />
+        <Container sx={{ display: 'flex', alignItems: 'center' }}>
+          <ItemsAndActives items={matchInfo.godItems} actives={matchInfo.godActives} patchVersion={patchVersion} />
+        </Container>
+        <Container sx={{ display: 'flex' }}>
+          <Container sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+            <Typography variant="h6">Allies</Typography>
+            <MatchGods gods={matchInfo.allies} />
+          </Container>
+          <Container sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+            <Typography variant="h6">Enemies</Typography>
+            <MatchGods gods={matchInfo.enemies} />
+          </Container>
         </Container>
       </Container>
     </Card>
