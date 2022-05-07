@@ -10,6 +10,10 @@ import range from 'lodash/range';
 import PropTypes from 'prop-types';
 import React, { useId } from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import { unparseIgn } from '../../helpers';
+import { PlaystationIcon, SteamIcon, XboxIcon, SwitchIcon, HirezIcon, EpicIcon } from '../icons';
 
 const IconPlaceHolder = () => {
   return <Avatar id="icon-placeholder" variant="square" />;
@@ -92,6 +96,25 @@ GodIcon.propTypes = {
 const MatchGods = ({ gods }) => {
   const id = useId();
 
+  const renderPlatformIcon = (platform) => {
+    switch (platform) {
+      case 'HIREZ':
+        return <HirezIcon style={{ height: '25px' }} />;
+      case 'PS4':
+        return <PlaystationIcon style={{ height: '25px' }} />;
+      case 'SWITCH':
+        return <SwitchIcon style={{ height: '25px' }} />;
+      case 'STEAM':
+        return <SteamIcon style={{ height: '25px' }} />;
+      case 'XBOX':
+        return <XboxIcon style={{ height: '25px' }} />;
+      case 'EPIC':
+        return <EpicIcon style={{ height: '25px' }} />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <React.Fragment>
       {_.map(gods, (group, index) => {
@@ -108,10 +131,19 @@ const MatchGods = ({ gods }) => {
             }}
           >
             {_.map(group, (player, index) => {
+              const { isProfileHidden, ign } = unparseIgn(player.ign);
               return (
                 <Box key={id + index} sx={{ display: 'flex', width: '250px' }}>
                   <GodIcon godName={player.god} sx={{ marginRight: '15px' }} />
-                  <Typography variant="h6">{player.ign}</Typography>
+                  <Typography variant="h6">
+                    {isProfileHidden ? (
+                      <em>{ign}</em>
+                    ) : (
+                      <Link to={ign} style={{ textDecoration: 'none' }}>
+                        {renderPlatformIcon(player.platform)} {ign}
+                      </Link>
+                    )}
+                  </Typography>
                 </Box>
               );
             })}
