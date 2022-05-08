@@ -59,6 +59,11 @@ export const Player = () => {
   useEffect(() => {
     fetchData();
 
+    if (!map) {
+      // reset local player info when we are going to a new page
+      setLocalPlayerInfo({});
+    }
+
     return () => {
       setIsUpdated(false);
     };
