@@ -158,6 +158,28 @@ MatchGods.propTypes = {
   gods: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)),
 };
 
+const MatchCardHeader = ({ matchInfo }) => {
+  return (
+    <Container
+      sx={{
+        backgroundColor: matchInfo.isVictory ? 'green' : 'red',
+        color: 'white',
+        display: 'flex',
+        justifyContent: 'space-around',
+        padding: '0px 5px',
+      }}
+    >
+      <Typography variant="h6">ID: {matchInfo.matchId}</Typography>
+      <Typography variant="h6">Duration: {matchInfo.durationInMinutes} minutes</Typography>
+      <Typography variant="h6">Date: {matchInfo.date}</Typography>
+    </Container>
+  );
+};
+
+MatchCardHeader.propTypes = {
+  matchInfo: PropTypes.object,
+};
+
 const MatchCard = ({ matchInfo }) => {
   const patchVersion = useSelector((state) => state.global.patchVersion);
   const kda = `${matchInfo.kills} / ${matchInfo.deaths} / ${matchInfo.assists}`;
@@ -172,12 +194,7 @@ const MatchCard = ({ matchInfo }) => {
       }}
     >
       <Container>
-        <Typography
-          variant="h6"
-          sx={{ backgroundColor: matchInfo.isVictory ? 'green' : 'red', color: 'white', padding: '0px 5px' }}
-        >
-          Match ID: {matchInfo.matchId}
-        </Typography>
+        <MatchCardHeader matchInfo={matchInfo} />
         <Container sx={{ display: 'flex', alignItems: 'center' }}>
           <GodIcon godName={matchInfo.god} sx={{ width: 56, height: 56, marginRight: 15 }} />
           <Typography variant="h6" sx={{ marginRight: 15 }}>

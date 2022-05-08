@@ -8,3 +8,8 @@ export const CONSTANTS = {
     HISTORY: 'history',
   },
 };
+
+export const MOMENT = {
+  HUMAN_TIME: 'M/D/YYYY h:mm:ss A',
+  CALENDAR_TIME: 'MMMM Do YYYY h:mm:ss A',
+};
