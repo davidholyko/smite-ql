@@ -12,12 +12,14 @@ export const PlayerBanner = ({ player }) => {
     return null;
   }
 
+  // for names like [USA]dhko, gets everything after ']' character
+  const name = player.TeamId ? player.Name.match(/\](.*)/) : player.Name;
   const mostRecentGame = moment(player.Last_Login_Datetime, MOMENT.HUMAN_TIME).fromNow();
 
   return (
     <Container>
       <Typography variant="h3" component="h3" sx={{ textAlign: 'center' }}>
-        {player.Name}
+        {name}
       </Typography>
       <Container sx={{ display: 'flex', justifyContent: 'center' }}>
         <Typography variant="h5" component="h5" sx={{ textAlign: 'center', padding: '5px' }}>

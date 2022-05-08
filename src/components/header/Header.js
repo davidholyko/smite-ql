@@ -77,11 +77,12 @@ export const Header = () => {
             </SearchIconWrapper>
             <StyledInputBase
               id="search-form"
+              autoComplete="off"
+              inputProps={{ 'aria-label': 'search' }}
+              placeholder="Search a player..."
               onChange={onChange}
               onKeyDown={onKeyDown}
               value={searchText}
-              placeholder="Search a player..."
-              inputProps={{ 'aria-label': 'search' }}
             />
           </SearchWrapper>
         </Toolbar>
