@@ -32,16 +32,7 @@ class SmiteConnector {
       url += `&${key}=${value}`;
     });
 
-    let response;
-
-    try {
-      response = await this._processRequest(url);
-    } catch (error) {
-      // if player info doesnt exist, try again with latest data
-      if (error.message === `ERR Path '$.players.${playerId}' does not exist`) {
-        response = await this.getPlayerInfo(playerId, true);
-      }
-    }
+    const response = await this._processRequest(url);
 
     return response;
   }

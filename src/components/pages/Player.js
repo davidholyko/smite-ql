@@ -21,19 +21,29 @@ export const Player = () => {
   const patchVersion = useSelector((state) => get(state, `global.patchVersion`, ''));
 
   const fetchData = async () => {
+    let newPlayerInfo = null;
     setIsLoading(true);
 
     if (map) {
       const newPlayerInfo = await smiteConnector.getPlayerInfo(playerId, { map });
       newPlayerInfo && setLocalPlayerInfo({ ...newPlayerInfo, name: playerId });
-    }
-
-    if (!isEmpty(playerInfo)) {
       setIsLoading(false);
       return;
     }
 
-    const newPlayerInfo = await smiteConnector.getPlayerInfo(playerId);
+    if (!isEmpty(playerInfo) && !map) {
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      newPlayerInfo = await smiteConnector.getPlayerInfo(playerId);
+    } catch (error) {
+      if (error.message === `ERR Path '$.players.${playerId}' does not exist`) {
+        newPlayerInfo = await smiteConnector.getPlayerInfo(playerId, { forceUpdate: true });
+      }
+    }
+
     newPlayerInfo && dispatch(savePlayerInfo({ ...newPlayerInfo, name: playerId }));
     setIsLoading(false);
   };
