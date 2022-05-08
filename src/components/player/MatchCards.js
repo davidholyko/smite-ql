@@ -97,19 +97,21 @@ const MatchGods = ({ gods }) => {
   const id = useId();
 
   const renderPlatformIcon = (platform) => {
+    const style = { height: '15px' };
+
     switch (platform) {
       case 'HIREZ':
-        return <HirezIcon style={{ height: '25px' }} />;
+        return <HirezIcon style={style} />;
       case 'PS4':
-        return <PlaystationIcon style={{ height: '25px' }} />;
+        return <PlaystationIcon style={style} />;
       case 'SWITCH':
-        return <SwitchIcon style={{ height: '25px' }} />;
+        return <SwitchIcon style={style} />;
       case 'STEAM':
-        return <SteamIcon style={{ height: '25px' }} />;
+        return <SteamIcon style={style} />;
       case 'XBOX':
-        return <XboxIcon style={{ height: '25px' }} />;
+        return <XboxIcon style={style} />;
       case 'EPIC':
-        return <EpicIcon style={{ height: '25px' }} />;
+        return <EpicIcon style={style} />;
       default:
         return null;
     }
@@ -140,10 +142,11 @@ const MatchGods = ({ gods }) => {
                       <em>{ign}</em>
                     ) : (
                       <Link to={ign} style={{ textDecoration: 'none' }}>
-                        {renderPlatformIcon(player.platform)} {ign}
+                        {ign}
                       </Link>
                     )}
                   </Typography>
+                  <Typography variant="superscript"> {renderPlatformIcon(player.platform)}</Typography>
                 </Box>
               );
             })}
