@@ -13,7 +13,7 @@ export const PlayerBanner = ({ player }) => {
   }
 
   // for names like [USA]dhko, gets everything after ']' character
-  const name = player.TeamId ? player.Name.match(/\](.*)/) : player.Name;
+  const name = player.TeamId ? player.Name.match(/\](.*)/)[1] : player.Name;
   const mostRecentGame = moment(player.Last_Login_Datetime, MOMENT.HUMAN_TIME).fromNow();
 
   return (

@@ -8,7 +8,8 @@ import { useParams } from 'react-router-dom';
 import { smiteConnector } from '../../api';
 import { savePlayerInfo } from '../../reducers/playerReducer';
 import { Header } from '../header';
-import { WinLossBar, MatchCards, PlayerBanner, UpdateContentSection } from '../player';
+import { MatchCards } from '../match-card';
+import { WinLossBar, PlayerBanner, UpdateContentSection } from '../player';
 
 export const Player = () => {
   const dispatch = useDispatch();
@@ -21,15 +22,21 @@ export const Player = () => {
 
   const fetchData = async () => {
     setIsLoading(true);
-    const playerInfo = await smiteConnector.getPlayerInfo(playerId);
-    playerInfo && dispatch(savePlayerInfo({ ...playerInfo, name: playerId }));
+
+    if (!isEmpty(playerInfo)) {
+      setIsLoading(false);
+      return;
+    }
+
+    const newPlayerInfo = await smiteConnector.getPlayerInfo(playerId);
+    newPlayerInfo && dispatch(savePlayerInfo({ ...newPlayerInfo, name: playerId }));
     setIsLoading(false);
   };
 
   const onClick = async () => {
     setIsLoading(true);
-    const playerInfo = await smiteConnector.getPlayerInfo(playerId, true);
-    playerInfo && dispatch(savePlayerInfo({ ...playerInfo, name: playerId }));
+    const newPlayerInfo = await smiteConnector.getPlayerInfo(playerId, true);
+    newPlayerInfo && dispatch(savePlayerInfo({ ...newPlayerInfo, name: playerId }));
     setIsUpdated(true);
     setIsLoading(false);
   };
