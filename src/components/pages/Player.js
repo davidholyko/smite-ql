@@ -9,19 +9,25 @@ import { smiteConnector } from '../../api';
 import { savePlayerInfo } from '../../reducers/playerReducer';
 import { Header } from '../header';
 import { MatchCards } from '../match-card';
-import { WinLossBar, PlayerBanner, UpdateContentSection } from '../player';
+import { WinLossBar, PlayerBanner, UpdateContentSection, MapDropdown } from '../player';
 
 export const Player = () => {
   const dispatch = useDispatch();
-  const { playerId } = useParams();
+  const { playerId, map } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false);
+  const [localPlayerInfo, setLocalPlayerInfo] = useState(null);
 
   const playerInfo = useSelector((state) => get(state, `player.player.${playerId}`, {}));
   const patchVersion = useSelector((state) => get(state, `global.patchVersion`));
 
   const fetchData = async () => {
     setIsLoading(true);
+
+    if (map) {
+      const newPlayerInfo = await smiteConnector.getPlayerInfo(playerId, { map });
+      newPlayerInfo && setLocalPlayerInfo({ ...newPlayerInfo, name: playerId });
+    }
 
     if (!isEmpty(playerInfo)) {
       setIsLoading(false);
@@ -35,7 +41,7 @@ export const Player = () => {
 
   const onClick = async () => {
     setIsLoading(true);
-    const newPlayerInfo = await smiteConnector.getPlayerInfo(playerId, true);
+    const newPlayerInfo = await smiteConnector.getPlayerInfo(playerId, { forceUpdate: true });
     newPlayerInfo && dispatch(savePlayerInfo({ ...newPlayerInfo, name: playerId }));
     setIsUpdated(true);
     setIsLoading(false);
@@ -47,7 +53,7 @@ export const Player = () => {
     return () => {
       setIsUpdated(false);
     };
-  }, [playerId]);
+  }, [playerId, map]);
 
   const renderContent = () => {
     if (isLoading) {
@@ -61,10 +67,16 @@ export const Player = () => {
       );
     }
 
+    const overall = localPlayerInfo ? localPlayerInfo.overall : playerInfo.overall;
+    const ranked = localPlayerInfo ? localPlayerInfo.ranked : playerInfo.ranked;
+    const normal = localPlayerInfo ? localPlayerInfo.normal : playerInfo.normal;
+    const matches = localPlayerInfo ? localPlayerInfo.matches : playerInfo.matches;
+    const history = localPlayerInfo ? localPlayerInfo.history : playerInfo.history;
+
     return (
       <React.Fragment>
-        <WinLossBar overall={playerInfo.overall} ranked={playerInfo.ranked} normal={playerInfo.normal} />
-        <MatchCards matches={playerInfo.matches} history={playerInfo.history} />
+        <WinLossBar overall={overall} ranked={ranked} normal={normal} />
+        <MatchCards matches={matches} history={history} />
       </React.Fragment>
     );
   };
@@ -72,8 +84,9 @@ export const Player = () => {
   return (
     <Container sx={{ p: [0] }}>
       <Header />
-      <UpdateContentSection onClick={onClick} isLoading={isLoading} isUpdated={isUpdated} />
-      <PlayerBanner player={playerInfo.player} />
+      <UpdateContentSection onClick={onClick} isLoading={isLoading} isUpdated={isUpdated} map={map} />
+      <MapDropdown playerId={get(playerInfo, 'player.ign')} />
+      <PlayerBanner player={get(playerInfo, 'player')} />
       {renderContent()}
     </Container>
   );

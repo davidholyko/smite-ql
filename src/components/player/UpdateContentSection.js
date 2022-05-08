@@ -4,12 +4,16 @@ import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export const UpdateContentSection = ({ onClick, isLoading, isUpdated }) => {
+export const UpdateContentSection = ({ onClick, isLoading, isUpdated, map }) => {
   if (isUpdated) {
     return null;
   }
 
   if (isLoading) {
+    return null;
+  }
+
+  if (map) {
     return null;
   }
 
@@ -30,4 +34,5 @@ UpdateContentSection.propTypes = {
   onClick: PropTypes.func,
   isLoading: PropTypes.bool,
   isUpdated: PropTypes.bool,
+  map: PropTypes.string,
 };

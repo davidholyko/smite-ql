@@ -1,4 +1,7 @@
 import axios from 'axios';
+import forEach from 'lodash/forEach';
+import identity from 'lodash/identity';
+import pickBy from 'lodash/pickBy';
 
 import { CONSTANTS } from '../constants';
 
@@ -22,8 +25,13 @@ class SmiteConnector {
     return response;
   }
 
-  async getPlayerInfo(playerId, forceUpdate = false) {
-    const url = `${URL}/${HISTORY}?player=${playerId}&forceUpdate=${forceUpdate}`;
+  async getPlayerInfo(playerId, options) {
+    let url = `${URL}/${HISTORY}?player=${playerId}`;
+
+    forEach(pickBy(options, identity), (value, key) => {
+      url += `&${key}=${value}`;
+    });
+
     let response;
 
     try {

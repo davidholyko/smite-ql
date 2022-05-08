@@ -13,3 +13,14 @@ export const MOMENT = {
   HUMAN_TIME: 'M/D/YYYY h:mm:ss A',
   CALENDAR_TIME: 'MMMM Do YYYY h:mm:ss A',
 };
+
+export const MAPS = {
+  RANKED_CONQUEST: 'Ranked Conquest',
+  RANKED_JOUST: 'Ranked Joust',
+  RANKED_DUEL: 'Ranked Duel',
+  CONQUEST: 'Conquest',
+  JOUST: 'Joust',
+  ASSAULT: 'Assault',
+  ARENA: 'Arena',
+  SLASH: 'Slash',
+};

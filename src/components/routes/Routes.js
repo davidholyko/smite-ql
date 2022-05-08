@@ -8,7 +8,9 @@ export const Routes = () => {
     <Switch>
       <Route exact path="/" element={<Home />} />
       <Route path="/player" element={<Player />}>
-        <Route path=":playerId" element={<Player />} />
+        <Route path=":playerId" element={<Player />}>
+          <Route path=":map" element={<Player />} />
+        </Route>
       </Route>
       <Route path="/history" element={<History />} />
       <Route path="/match" element={<Match />} />

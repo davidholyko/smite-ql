@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { smiteConnector } from '../../api';
 import { saveGods, saveItems, savePatchVersion } from '../../reducers/globalReducer';
-import { Routes } from '../routes/Routes';
+import { Routes } from '../routes';
 
 export const App = () => {
   const dispatch = useDispatch();
