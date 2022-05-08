@@ -8,18 +8,17 @@ import { useParams } from 'react-router-dom';
 import { smiteConnector } from '../../api';
 import { savePlayerInfo } from '../../reducers/playerReducer';
 import { Header } from '../header';
-import { MatchCards } from '../match-card';
-import { WinLossBar, PlayerBanner, UpdateContentSection, MapDropdown } from '../player';
+import { PlayerBanner, UpdateContentSection, MapDropdown, PlayerContent } from '../player';
 
 export const Player = () => {
   const dispatch = useDispatch();
   const { playerId, map } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false);
-  const [localPlayerInfo, setLocalPlayerInfo] = useState(null);
+  const [localPlayerInfo, setLocalPlayerInfo] = useState({});
 
   const playerInfo = useSelector((state) => get(state, `player.player.${playerId}`, {}));
-  const patchVersion = useSelector((state) => get(state, `global.patchVersion`));
+  const patchVersion = useSelector((state) => get(state, `global.patchVersion`, ''));
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -55,39 +54,19 @@ export const Player = () => {
     };
   }, [playerId, map]);
 
-  const renderContent = () => {
-    if (isLoading) {
-      return <Container>SmiteQL is thinking... Please wait a moment.</Container>;
-    }
-
-    if (isEmpty(playerInfo) || isEmpty(patchVersion)) {
-      // TODO: make a placeholder component
-      return (
-        <Container>Player {playerId} was not found. Current version of SmiteQL only supports PC players.</Container>
-      );
-    }
-
-    const overall = localPlayerInfo ? localPlayerInfo.overall : playerInfo.overall;
-    const ranked = localPlayerInfo ? localPlayerInfo.ranked : playerInfo.ranked;
-    const normal = localPlayerInfo ? localPlayerInfo.normal : playerInfo.normal;
-    const matches = localPlayerInfo ? localPlayerInfo.matches : playerInfo.matches;
-    const history = localPlayerInfo ? localPlayerInfo.history : playerInfo.history;
-
-    return (
-      <React.Fragment>
-        <WinLossBar overall={overall} ranked={ranked} normal={normal} />
-        <MatchCards matches={matches} history={history} />
-      </React.Fragment>
-    );
-  };
-
   return (
     <Container sx={{ p: [0] }}>
       <Header />
       <UpdateContentSection onClick={onClick} isLoading={isLoading} isUpdated={isUpdated} map={map} />
       <MapDropdown playerId={get(playerInfo, 'player.ign')} />
       <PlayerBanner player={get(playerInfo, 'player')} />
-      {renderContent()}
+      <PlayerContent
+        isLoading={isLoading}
+        patchVersion={patchVersion}
+        playerInfo={playerInfo}
+        localPlayerInfo={localPlayerInfo}
+        playerId={playerId}
+      />
     </Container>
   );
 };
