@@ -10,8 +10,9 @@ export const CONSTANTS = {
 };
 
 export const MOMENT = {
-  HUMAN_TIME: 'M/D/YYYY h:mm:ss A',
-  CALENDAR_TIME: 'MMMM Do YYYY h:mm:ss A',
+  HUMAN_TIME_FORMAT: 'M/D/YYYY h:mm:ss A',
+  CALENDAR_FORMAT: 'MMMM Do YYYY h:mm:ss A',
+  SMITE_API_FORMAT: 'YYYYMMDDHHmmss',
 };
 
 export const MAPS = {

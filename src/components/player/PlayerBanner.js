@@ -12,7 +12,7 @@ export const PlayerBanner = ({ player }) => {
     return null;
   }
 
-  const mostRecentGame = moment(player.Last_Login_Datetime, MOMENT.HUMAN_TIME).fromNow();
+  const lastLoginDate = moment(player.Last_Login_Datetime, MOMENT.HUMAN_TIME_FORMAT).fromNow();
 
   return (
     <Container>
@@ -21,15 +21,16 @@ export const PlayerBanner = ({ player }) => {
       </Typography>
       <Container sx={{ display: 'flex', justifyContent: 'center' }}>
         <Typography variant="h5" component="h5" sx={{ textAlign: 'center', padding: '5px' }}>
-          {player.Level} ⭐
+          {player.Level}
+          <sub style={{ fontFamily: 'none', fontSize: '10px' }}>LV</sub>
         </Typography>
         <Typography variant="h5" component="h5" sx={{ textAlign: 'center', padding: '5px' }}>
-          {player.MasteryLevel} 💎
+          {player.MasteryLevel} ⭐
         </Typography>
       </Container>
       <Container sx={{ display: 'flex', justifyContent: 'center' }}>
         <Typography variant="h6" component="h6" sx={{ textAlign: 'center', padding: '5px' }}>
-          Most Recent Game: {mostRecentGame}
+          Last Online: {lastLoginDate}
         </Typography>
       </Container>
     </Container>

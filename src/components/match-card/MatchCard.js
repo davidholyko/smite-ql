@@ -16,7 +16,6 @@ export const MatchCard = ({ matchInfo }) => {
       id="match-card"
       sx={{
         minWidth: '300px',
-        padding: '15px',
         margin: '15px',
       }}
     >
