@@ -9,7 +9,8 @@ import { MOMENT } from '../../constants';
 const { SMITE_API_FORMAT, CALENDAR_FORMAT } = MOMENT;
 
 export const MatchCardHeader = ({ matchInfo }) => {
-  const date = moment(matchInfo.date, SMITE_API_FORMAT).format(CALENDAR_FORMAT);
+  const timezoneOffset = moment().utcOffset();
+  const date = moment(matchInfo.date, SMITE_API_FORMAT).add(timezoneOffset, 'minutes').format(CALENDAR_FORMAT);
 
   return (
     <Container

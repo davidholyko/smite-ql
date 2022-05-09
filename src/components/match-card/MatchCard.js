@@ -15,8 +15,9 @@ export const MatchCard = ({ matchInfo }) => {
     <Card
       id="match-card"
       sx={{
-        minWidth: '300px',
+        width: '750px',
         margin: '15px',
+        padding: '0px 0px 10px 0px',
       }}
     >
       <MatchCardHeader matchInfo={matchInfo} />
