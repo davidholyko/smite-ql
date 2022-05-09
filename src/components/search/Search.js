@@ -2,7 +2,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { styled, alpha } from '@mui/material/styles';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const SearchWrapper = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -46,7 +47,20 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export const Search = ({ onChange, onKeyDown, value }) => {
+export const Search = () => {
+  const navigate = useNavigate();
+  const [searchText, setSearchText] = useState('');
+
+  const onChange = (event) => {
+    setSearchText(event.target.value);
+  };
+
+  const onKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      navigate(`/player/${searchText}`);
+    }
+  };
+
   return (
     <SearchWrapper>
       <SearchIconWrapper>
@@ -59,7 +73,7 @@ export const Search = ({ onChange, onKeyDown, value }) => {
         placeholder="Search a player..."
         onChange={onChange}
         onKeyDown={onKeyDown}
-        value={value}
+        value={searchText}
       />
     </SearchWrapper>
   );
