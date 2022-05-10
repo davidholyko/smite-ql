@@ -9,8 +9,8 @@ export const Home = () => {
     <Container
       sx={{
         color: theme.palette.primary.contrastText,
-        height: '100vh',
-        width: '100vw',
+        height: ['100vh'],
+        width: ['100vw'],
         backgroundColor: theme.palette.primary.main,
         display: 'flex',
         alignItems: 'center',

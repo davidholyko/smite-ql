@@ -2,17 +2,30 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
+import includes from 'lodash/includes';
 import values from 'lodash/values';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { MAPS } from '../../constants';
+import { MAPS, LOADING_STATUSES } from '../../constants';
+
+const {
+  // NOT_LOADING, // 0
+  CACHE_LOOKUP, // 1
+  REQUEST_IN_PROGRESS, // 2
+  REQUEST_RETURNED, // 3
+  // PROCESS_COMPLETE, // 4
+} = LOADING_STATUSES;
 
 const options = values(MAPS);
 
-export const MapDropdown = ({ playerId }) => {
+export const MapDropdown = ({ playerId, loadingStatus }) => {
   if (!playerId) {
+    return null;
+  }
+
+  if (includes([CACHE_LOOKUP, REQUEST_IN_PROGRESS, REQUEST_RETURNED], loadingStatus)) {
     return null;
   }
 
@@ -53,4 +66,5 @@ export const MapDropdown = ({ playerId }) => {
 
 MapDropdown.propTypes = {
   playerId: PropTypes.string,
+  loadingStatus: PropTypes.number,
 };

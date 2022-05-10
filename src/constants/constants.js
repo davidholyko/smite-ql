@@ -25,3 +25,11 @@ export const MAPS = {
   ARENA: 'Arena',
   SLASH: 'Slash',
 };
+
+export const LOADING_STATUSES = {
+  NOT_LOADING: 0,
+  CACHE_LOOKUP: 1,
+  REQUEST_IN_PROGRESS: 2,
+  REQUEST_RETURNED: 3,
+  PROCESS_COMPLETE: 4,
+};

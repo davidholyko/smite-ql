@@ -6,14 +6,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { smiteConnector } from '../../api';
+import { LOADING_STATUSES } from '../../constants';
 import { savePlayerInfo } from '../../reducers/playerReducer';
 import { Header } from '../header';
 import { PlayerBanner, UpdateContentSection, MapDropdown, PlayerContent } from '../player';
 
+const {
+  NOT_LOADING, // 0
+  CACHE_LOOKUP, // 1
+  // REQUEST_IN_PROGRESS, // 2
+  REQUEST_RETURNED, // 3
+  PROCESS_COMPLETE, // 4
+} = LOADING_STATUSES;
+
 export const Player = () => {
   const dispatch = useDispatch();
   const { playerId, map } = useParams();
-  const [isLoading, setIsLoading] = useState(false);
+  const [loadingStatus, setLoadingStatus] = useState(NOT_LOADING);
   const [isUpdated, setIsUpdated] = useState(false);
   const [localPlayerInfo, setLocalPlayerInfo] = useState({});
 
@@ -22,41 +31,44 @@ export const Player = () => {
 
   const fetchData = async () => {
     let newPlayerInfo = null;
-    setIsLoading(true);
 
     if (map) {
+      setLoadingStatus(CACHE_LOOKUP);
       const newPlayerInfo = await smiteConnector.getPlayerInfo(playerId, { map });
       newPlayerInfo && setLocalPlayerInfo({ ...newPlayerInfo, name: playerId });
-      setIsLoading(false);
+      setLoadingStatus(PROCESS_COMPLETE);
       return;
     }
 
     if (!isEmpty(playerInfo) && !map) {
-      setIsLoading(false);
+      setLoadingStatus(PROCESS_COMPLETE);
       return;
     }
 
     try {
+      setLoadingStatus(CACHE_LOOKUP);
       newPlayerInfo = await smiteConnector.getPlayerInfo(playerId);
     } catch (error) {
       if (error.message === `ERR Path '$.players.${playerId}' does not exist`) {
         newPlayerInfo = await smiteConnector.getPlayerInfo(playerId, { forceUpdate: true });
+        setLoadingStatus(REQUEST_RETURNED);
       }
     }
 
     newPlayerInfo && dispatch(savePlayerInfo({ ...newPlayerInfo, name: playerId }));
-    setIsLoading(false);
+    setLoadingStatus(PROCESS_COMPLETE);
   };
 
   const onClick = async () => {
-    setIsLoading(true);
+    setLoadingStatus(CACHE_LOOKUP);
     const newPlayerInfo = await smiteConnector.getPlayerInfo(playerId, { forceUpdate: true });
     newPlayerInfo && dispatch(savePlayerInfo({ ...newPlayerInfo, name: playerId }));
     setIsUpdated(true);
-    setIsLoading(false);
+    setLoadingStatus(REQUEST_RETURNED);
   };
 
   useEffect(() => {
+    setLoadingStatus(0);
     fetchData();
 
     if (!map) {
@@ -66,17 +78,19 @@ export const Player = () => {
 
     return () => {
       setIsUpdated(false);
+      setLoadingStatus(NOT_LOADING);
     };
   }, [playerId, map]);
 
   return (
     <Container sx={{ p: [0] }}>
       <Header />
-      <UpdateContentSection onClick={onClick} isLoading={isLoading} isUpdated={isUpdated} map={map} />
-      <MapDropdown playerId={get(playerInfo, 'player.ign')} />
-      <PlayerBanner player={get(playerInfo, 'player')} />
+      <UpdateContentSection onClick={onClick} loadingStatus={loadingStatus} isUpdated={isUpdated} map={map} />
+      <MapDropdown loadingStatus={loadingStatus} playerId={get(playerInfo, 'player.ign')} />
+      <PlayerBanner loadingStatus={loadingStatus} player={get(playerInfo, 'player')} />
       <PlayerContent
-        isLoading={isLoading}
+        setLoadingStatus={setLoadingStatus}
+        loadingStatus={loadingStatus}
         patchVersion={patchVersion}
         playerInfo={playerInfo}
         localPlayerInfo={localPlayerInfo}
