@@ -1,6 +1,6 @@
 .pulsing-step svg {
   animation: pulse 1.5s infinite;
-  border-radius: 50px;
+  border-radius: 50%;
 }
 
 @keyframes pulse {
