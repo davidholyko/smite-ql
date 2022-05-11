@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import { smiteConnector } from '../../api';
 import { LOADING_STATUSES } from '../../constants';
 import { savePlayerInfo } from '../../reducers/playerReducer';
+import { Footer } from '../footer';
 import { Header } from '../header';
 import { PlayerBanner, UpdateContentSection, MapDropdown, PlayerContent } from '../player';
 
@@ -96,6 +97,7 @@ export const Player = () => {
         localPlayerInfo={localPlayerInfo}
         playerId={playerId}
       />
+      <Footer />
     </Container>
   );
 };
