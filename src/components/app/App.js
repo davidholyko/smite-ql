@@ -29,7 +29,7 @@ export const App = () => {
   }, []);
 
   return (
-    <Container id="app" sx={{ p: [0] }}>
+    <Container id="app" sx={{ p: [0] }} maxWidth="false">
       <Routes />
     </Container>
   );

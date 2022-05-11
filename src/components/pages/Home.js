@@ -1,4 +1,5 @@
 import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 import React from 'react';
 
 import { theme } from '../../theme';
@@ -15,8 +16,22 @@ export const Home = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        flexDirection: 'column',
       }}
+      maxWidth="false"
     >
+      <Container
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          padding: '30px',
+        }}
+      >
+        <Typography variant="h2">SmiteQL</Typography>
+        <Typography>A high performance, low latency web application for Smite Match History</Typography>
+      </Container>
       <Search />
     </Container>
   );
