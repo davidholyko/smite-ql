@@ -2,6 +2,7 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 
+import appJson from '../../../package.json';
 import { theme } from '../../theme';
 import { ExternalLinkIcon } from '../icons';
 
@@ -25,6 +26,9 @@ export const Footer = () => {
         >
           Github <ExternalLinkIcon />
         </a>
+      </Typography>
+      <Typography variant="body2" sx={{ textAlign: 'end' }}>
+        v{appJson.version}
       </Typography>
     </Container>
   );
