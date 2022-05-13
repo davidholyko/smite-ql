@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import React from 'react';
 
 import appJson from '../../../package.json';
-import { theme } from '../../theme';
+import { theme } from '../../constants';
 import { ExternalLinkIcon } from '../icons';
 
 export const Footer = () => {
@@ -27,7 +27,7 @@ export const Footer = () => {
           Github <ExternalLinkIcon />
         </a>
       </Typography>
-      <Typography variant="body2" sx={{ textAlign: 'end' }}>
+      <Typography variant="body2" sx={{ textAlign: 'end', position: 'absolute', bottom: '5px', right: '5px' }}>
         v{appJson.version}
       </Typography>
     </Container>

@@ -2,7 +2,7 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 
-import { theme } from '../../theme';
+import { theme } from '../../constants';
 import { Search } from '../search';
 
 export const Home = () => {

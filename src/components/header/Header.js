@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { theme } from '../../theme';
+import { theme } from '../../constants';
 import { Search } from '../search';
 
 export const Header = () => {

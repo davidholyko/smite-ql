@@ -5,7 +5,7 @@ import includes from 'lodash/includes';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { LOADING_STATUSES } from '../../constants';
+import { LOADING_STATUSES, theme } from '../../constants';
 
 const {
   // NOT_LOADING, // 0
@@ -29,13 +29,26 @@ export const UpdateContentSection = ({ onClick, loadingStatus, isUpdated, map })
   }
 
   return (
-    <Container sx={{ backgroundColor: 'lightgray', padding: '10px 15px', display: 'flex' }}>
-      <Typography variant="subtitle2">
-        Are you looking for a more recent match? Trigger an update by clicking the button.
-      </Typography>
+    <Container
+      sx={{
+        backgroundColor: '#EEE',
+        padding: '10px 15px',
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+      theme={theme}
+    >
+      <Container sx={{ display: 'flex', flexDirection: 'column', textAlign: 'right' }}>
+        <Typography variant="body2">Are you looking for a more recent match?</Typography>
+        <Typography variant="body2">Trigger an update by clicking the button.</Typography>
+      </Container>
 
-      <Button variant="contained" sx={{ marginLeft: 'auto' }} onClick={onClick}>
-        Update Player Info
+      <Button
+        variant="contained"
+        sx={{ marginLeft: 'auto', whiteSpace: 'nowrap', padding: '5px 15px' }}
+        onClick={onClick}
+      >
+        Update Player
       </Button>
     </Container>
   );

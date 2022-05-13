@@ -27,6 +27,9 @@ export const PlayerContent = ({
   playerInfo,
   setLoadingStatus,
 }) => {
+  const info = !isEmpty(localPlayerInfo) ? localPlayerInfo : playerInfo;
+  const { overall, ranked, normal, matches, history } = info;
+
   useEffect(() => {
     let loadingId;
 
@@ -41,38 +44,41 @@ export const PlayerContent = ({
     };
   }, [loadingStatus]);
 
-  if (loadingStatus !== PROCESS_COMPLETE) {
-    return (
-      <Container>
-        <Typography variant="h2" element="h2" sx={{ textAlign: 'center', padding: '20px' }}>
-          {playerId}
-        </Typography>
-        <LoadingStepper activeStep={loadingStatus} />
-      </Container>
-    );
-  }
+  let content = null;
 
-  if (isEmpty(playerInfo) || isEmpty(patchVersion)) {
-    // TODO: make a placeholder component
-    return (
-      <Container
-        sx={{
-          minHeight: '70vh',
-        }}
-      >
-        Player {playerId} was not found. Current version of SmiteQL only supports PC players.
-      </Container>
-    );
+  switch (true) {
+    case loadingStatus !== PROCESS_COMPLETE:
+      content = (
+        <React.Fragment>
+          <Typography variant="h2" element="h2" sx={{ textAlign: 'center', padding: '20px' }}>
+            {playerId}
+          </Typography>
+          <LoadingStepper activeStep={loadingStatus} />
+        </React.Fragment>
+      );
+      break;
+    case isEmpty(info) || isEmpty(patchVersion):
+      content = (
+        <React.Fragment>
+          <Typography variant="body2">
+            Player {playerId} was not found. Current version of SmiteQL only supports PC players.
+          </Typography>
+        </React.Fragment>
+      );
+      break;
+    default:
+      content = (
+        <React.Fragment>
+          <WinLossBar overall={overall} ranked={ranked} normal={normal} />
+          <MatchCards matches={matches} history={history} />
+        </React.Fragment>
+      );
   }
-
-  const info = !isEmpty(localPlayerInfo) ? localPlayerInfo : playerInfo;
-  const { overall, ranked, normal, matches, history } = info;
 
   return (
-    <React.Fragment>
-      <WinLossBar overall={overall} ranked={ranked} normal={normal} />
-      <MatchCards matches={matches} history={history} />
-    </React.Fragment>
+    <Container id="player-content" sx={{ flexGrow: 1 }}>
+      {content}
+    </Container>
   );
 };
 

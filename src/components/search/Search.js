@@ -9,8 +9,8 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { theme } from '../../constants';
 import { savePlayerIdSearch } from '../../reducers/settingsReducer';
-import { theme } from '../../theme';
 
 const SearchWrapper = styled(Box)(({ theme }) => {
   return {

@@ -94,7 +94,15 @@ export const Player = () => {
   }, [playerId, map]);
 
   return (
-    <Container sx={{ p: [0] }}>
+    <Container
+      id="player-page"
+      sx={{
+        p: [0],
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       <Header />
       <UpdateContentSection onClick={onClick} loadingStatus={loadingStatus} isUpdated={isUpdated} map={map} />
       <MapDropdown loadingStatus={loadingStatus} playerId={get(playerInfo, 'player.ign')} />
