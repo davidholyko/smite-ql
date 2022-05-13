@@ -66,6 +66,10 @@ const SearchInput = styled(TextField)(({ theme }) => {
       // undo offset when focused
       paddingLeft: '0em',
     },
+    '.MuiAutocomplete-inputRoot': {
+      // prevents width from changing text goes from blank to any string
+      paddingRight: '39px',
+    },
   };
 });
 
@@ -80,7 +84,7 @@ export const Search = () => {
   };
 
   const onKeyDown = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && searchText) {
       navigate(`/player/${searchText}`);
       dispatch(savePlayerIdSearch(searchText));
     }
@@ -97,7 +101,7 @@ export const Search = () => {
         options={previousSearches}
         theme={theme}
         freeSolo={true}
-        sx={{ minWidth: '250px' }}
+        // sx={{ minWidth: '250px' }}
         getOptionLabel={(option) => String(option)}
         renderInput={(params) => (
           <SearchInput {...params} onChange={onChange} onKeyDown={onKeyDown} label="Search a player" />
