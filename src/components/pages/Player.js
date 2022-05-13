@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import { smiteConnector } from '../../api';
 import { LOADING_STATUSES } from '../../constants';
 import { savePlayerInfo } from '../../reducers/playerReducer';
+import { removePlayerIdSearch } from '../../reducers/settingsReducer';
 import { Footer } from '../footer';
 import { Header } from '../header';
 import { PlayerBanner, UpdateContentSection, MapDropdown, PlayerContent } from '../player';
@@ -49,10 +50,19 @@ export const Player = () => {
     try {
       setLoadingStatus(CACHE_LOOKUP);
       newPlayerInfo = await smiteConnector.getPlayerInfo(playerId);
-    } catch (error) {
-      if (error.message === `ERR Path '$.players.${playerId}' does not exist`) {
-        newPlayerInfo = await smiteConnector.getPlayerInfo(playerId, { forceUpdate: true });
-        setLoadingStatus(REQUEST_RETURNED);
+    } catch (error_1) {
+      try {
+        // player does not exist in SmiteQL
+        if (error_1.message === `ERR Path '$.players.${playerId}' does not exist`) {
+          newPlayerInfo = await smiteConnector.getPlayerInfo(playerId, { forceUpdate: true });
+          setLoadingStatus(REQUEST_RETURNED);
+        }
+      } catch (error_2) {
+        // player actually does not exist in Smite
+        // do not save in auto complete
+        if (error_2.message === `Player: ${playerId} does not exist.`) {
+          dispatch(removePlayerIdSearch(playerId));
+        }
       }
     }
 

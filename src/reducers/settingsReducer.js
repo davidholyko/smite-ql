@@ -11,7 +11,7 @@ export const settingsSlice = createSlice({
       // only save last 10 recent searches
       const history = [...state.searchHistory];
 
-      if (history.length > 10) {
+      if (history.length > 5) {
         history.pop();
       }
 
@@ -34,5 +34,5 @@ export const settingsSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { savePlayerIdSearch } = settingsSlice.actions;
+export const { savePlayerIdSearch, removePlayerIdSearch } = settingsSlice.actions;
 export const settingsReducer = settingsSlice.reducer;
