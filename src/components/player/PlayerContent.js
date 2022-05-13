@@ -54,7 +54,15 @@ export const PlayerContent = ({
 
   if (isEmpty(playerInfo) || isEmpty(patchVersion)) {
     // TODO: make a placeholder component
-    return <Container>Player {playerId} was not found. Current version of SmiteQL only supports PC players.</Container>;
+    return (
+      <Container
+        sx={{
+          minHeight: '70vh',
+        }}
+      >
+        Player {playerId} was not found. Current version of SmiteQL only supports PC players.
+      </Container>
+    );
   }
 
   const info = !isEmpty(localPlayerInfo) ? localPlayerInfo : playerInfo;
