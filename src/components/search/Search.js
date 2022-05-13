@@ -1,11 +1,15 @@
 import SearchIcon from '@mui/icons-material/Search';
+import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
-import InputBase from '@mui/material/InputBase';
+// import InputBase from '@mui/material/InputBase';
 import { styled, alpha } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { savePlayerIdSearch } from '../../reducers/settingsReducer';
 import { theme } from '../../theme';
 
 const SearchWrapper = styled(Box)(({ theme }) => {
@@ -37,28 +41,39 @@ const SearchIconWrapper = styled(Box)(({ theme }) => {
   };
 });
 
-const StyledInputBase = styled(InputBase)(({ theme }) => {
+const SearchInput = styled(TextField)(({ theme }) => {
   return {
     color: 'inherit',
-    '#search-form': {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        width: '20ch',
-        '&:focus': {
-          width: '30ch',
-        },
+    transition: theme.transitions.create('width'),
+    '#search-player-auto-complete': {
+      color: 'white',
+      paddingLeft: '2em',
+      marginLeft: '0.75em',
+      transition: 'width 0.25s ease-in-out',
+      width: '20ch',
+      '&:focus': {
+        width: '30ch',
       },
+    },
+    '#search-player-auto-complete-label': {
+      backgroundColor: 'rgba(0,0,0,0)',
+      color: 'white',
+      // offset playerholder text when unfocused
+      paddingLeft: '2.5em',
+    },
+    '#search-player-auto-complete-label.Mui-focused': {
+      color: 'white',
+      // undo offset when focused
+      paddingLeft: '0em',
     },
   };
 });
 
 export const Search = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [searchText, setSearchText] = useState('');
+  const previousSearches = useSelector((state) => state.settings.searchHistory);
 
   const onChange = (event) => {
     setSearchText(event.target.value);
@@ -67,6 +82,7 @@ export const Search = () => {
   const onKeyDown = (event) => {
     if (event.key === 'Enter') {
       navigate(`/player/${searchText}`);
+      dispatch(savePlayerIdSearch(searchText));
     }
   };
 
@@ -75,15 +91,17 @@ export const Search = () => {
       <SearchIconWrapper theme={theme}>
         <SearchIcon />
       </SearchIconWrapper>
-      <StyledInputBase
-        id="search-form"
-        autoComplete="off"
-        inputProps={{ 'aria-label': 'search' }}
-        placeholder="Search a player..."
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-        value={searchText}
+      <Autocomplete
+        id="search-player-auto-complete"
+        disablePortal={true}
+        options={previousSearches}
         theme={theme}
+        freeSolo={true}
+        sx={{ minWidth: '250px' }}
+        getOptionLabel={(option) => String(option)}
+        renderInput={(params) => (
+          <SearchInput {...params} onChange={onChange} onKeyDown={onKeyDown} label="Search a player" />
+        )}
       />
     </SearchWrapper>
   );
