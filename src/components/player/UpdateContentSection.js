@@ -37,6 +37,7 @@ export const UpdateContentSection = ({ onClick, loadingStatus, isUpdated, map })
         justifyContent: 'center',
       }}
       theme={theme}
+      maxWidth={false}
     >
       <Container sx={{ display: 'flex', flexDirection: 'column', textAlign: 'right' }}>
         <Typography variant="body2">Are you looking for a more recent match?</Typography>
