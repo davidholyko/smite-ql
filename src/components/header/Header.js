@@ -9,12 +9,7 @@ import { Search } from '../search';
 
 export const Header = () => {
   return (
-    <AppBar
-      position="static"
-      sx={{
-        paddingY: '5px',
-      }}
-    >
+    <AppBar position="static" sx={{ paddingY: '5px', maxWidth: '100vw' }}>
       <Toolbar>
         <Typography
           variant="h6"

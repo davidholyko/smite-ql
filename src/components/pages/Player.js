@@ -117,6 +117,7 @@ export const Player = () => {
         display: 'flex',
         flexDirection: 'column',
       }}
+      maxWidth={false}
     >
       <Header />
       <UpdateContentSection onClick={onClick} loadingStatus={loadingStatus} isUpdated={isUpdated} map={map} />

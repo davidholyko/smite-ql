@@ -11,25 +11,52 @@ export const Footer = () => {
     <Container
       sx={{
         backgroundColor: theme.palette.primary.dark,
-        padding: '10px',
+        padding: '10px 10px 25px 10px',
         color: 'white',
         textAlign: 'center',
       }}
+      maxWidth={false}
     >
       <Typography variant="h5">Source Code</Typography>
-      <Typography>
-        <a
-          href="https://github.com/davidholyko/smite-ql"
-          rel="noreferrer"
-          target="_blank"
-          style={{ textDecoration: 'none', color: 'white' }}
-        >
-          Github <ExternalLinkIcon />
-        </a>
-      </Typography>
-      <Typography variant="body2" sx={{ textAlign: 'end', position: 'absolute', bottom: '5px', right: '5px' }}>
-        v{appJson.version}
-      </Typography>
+      <Container
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          left: 0,
+          padding: [0],
+          position: 'absolute',
+        }}
+        maxWidth={false}
+      >
+        <Typography>
+          <a
+            href="https://github.com/davidholyko/smite-ql"
+            rel="noreferrer"
+            target="_blank"
+            style={{
+              textDecoration: 'none',
+              color: 'white',
+              alignSelf: 'center',
+            }}
+          >
+            Github <ExternalLinkIcon />
+          </a>
+        </Typography>
+      </Container>
+      <Container
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          left: 0,
+          padding: [0],
+          position: 'absolute',
+        }}
+        maxWidth={false}
+      >
+        <Typography variant="body2" sx={{ paddingX: '5px' }}>
+          v{appJson.version}
+        </Typography>
+      </Container>
     </Container>
   );
 };
