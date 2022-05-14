@@ -47,7 +47,14 @@ export const MapDropdown = ({ playerId, loadingStatus }) => {
   };
 
   return (
-    <Container sx={{ display: 'flex', margin: '5px', justifyContent: 'center' }}>
+    <Container
+      sx={{
+        display: 'flex',
+        margin: '5px',
+        justifyContent: 'center',
+        maxWidth: '100vw',
+      }}
+    >
       <Autocomplete
         id="search-by-map-autocomplete"
         onChange={onChange}

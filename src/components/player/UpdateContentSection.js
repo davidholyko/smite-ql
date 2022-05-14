@@ -35,15 +35,14 @@ export const UpdateContentSection = ({ onClick, loadingStatus, isUpdated, map })
         padding: '10px 15px',
         display: 'flex',
         justifyContent: 'center',
+        maxWidth: '100vw',
       }}
       theme={theme}
-      maxWidth={false}
     >
       <Container sx={{ display: 'flex', flexDirection: 'column', textAlign: 'right' }}>
         <Typography variant="body2">Are you looking for a more recent match?</Typography>
         <Typography variant="body2">Trigger an update by clicking the button.</Typography>
       </Container>
-
       <Button
         variant="contained"
         sx={{ marginLeft: 'auto', whiteSpace: 'nowrap', padding: '5px 15px' }}

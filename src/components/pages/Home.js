@@ -9,21 +9,21 @@ export const Home = () => {
   return (
     <Container
       sx={{
+        alignItems: 'center',
+        backgroundColor: theme.palette.primary.main,
         color: theme.palette.primary.contrastText,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
         height: ['100vh'],
         width: ['100vw'],
-        backgroundColor: theme.palette.primary.main,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
+        maxWidth: '100vw',
       }}
-      maxWidth="false"
     >
       <Container
         sx={{
-          display: 'flex',
           alignItems: 'center',
+          display: 'flex',
           justifyContent: 'center',
           flexDirection: 'column',
           padding: '30px',

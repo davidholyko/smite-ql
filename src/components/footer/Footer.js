@@ -11,11 +11,11 @@ export const Footer = () => {
     <Container
       sx={{
         backgroundColor: theme.palette.primary.dark,
-        padding: '10px 10px 25px 10px',
         color: 'white',
+        maxWidth: '100vw',
+        padding: '10px 10px 25px 10px',
         textAlign: 'center',
       }}
-      maxWidth={false}
     >
       <Typography variant="h5">Source Code</Typography>
       <Container
@@ -23,10 +23,10 @@ export const Footer = () => {
           display: 'flex',
           justifyContent: 'center',
           left: 0,
+          maxWidth: '100vw',
           padding: [0],
           position: 'absolute',
         }}
-        maxWidth={false}
       >
         <Typography>
           <a
@@ -48,10 +48,10 @@ export const Footer = () => {
           display: 'flex',
           justifyContent: 'flex-end',
           left: 0,
+          maxWidth: '100vw',
           padding: [0],
           position: 'absolute',
         }}
-        maxWidth={false}
       >
         <Typography variant="body2" sx={{ paddingX: '5px' }}>
           v{appJson.version}
