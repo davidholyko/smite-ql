@@ -3,7 +3,7 @@ import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 
 import { smiteConnector } from '../../api';
 import { LOADING_STATUSES } from '../../constants';
@@ -23,6 +23,8 @@ const {
 
 export const Player = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+
   const { playerId, map } = useParams();
   const [loadingStatus, setLoadingStatus] = useState(NOT_LOADING);
   const [isUpdated, setIsUpdated] = useState(false);
@@ -47,6 +49,10 @@ export const Player = () => {
       return;
     }
 
+    // TODO: refactor this
+    // Attempt 1: get cached data
+    // Attempt 2: get new data
+    // Attempt 2 Failure: player does not actually exist
     try {
       setLoadingStatus(CACHE_LOOKUP);
       newPlayerInfo = await smiteConnector.getPlayerInfo(playerId);
@@ -54,7 +60,11 @@ export const Player = () => {
       try {
         // player does not exist in SmiteQL
         if (error_1.message === `ERR Path '$.players.${playerId}' does not exist`) {
-          newPlayerInfo = await smiteConnector.getPlayerInfo(playerId, { forceUpdate: true });
+          newPlayerInfo = await smiteConnector.getPlayerInfo(playerId, {
+            forceUpdate: true,
+            platform: get(location, 'state.platform'),
+          });
+
           setLoadingStatus(REQUEST_RETURNED);
         }
       } catch (error_2) {
@@ -72,7 +82,12 @@ export const Player = () => {
 
   const onClick = async () => {
     setLoadingStatus(CACHE_LOOKUP);
-    const newPlayerInfo = await smiteConnector.getPlayerInfo(playerId, { forceUpdate: true });
+
+    const newPlayerInfo = await smiteConnector.getPlayerInfo(playerId, {
+      forceUpdate: true,
+      platform: get(location, 'state.platform'),
+    });
+
     newPlayerInfo && dispatch(savePlayerInfo({ ...newPlayerInfo, name: playerId }));
     setIsUpdated(true);
     setLoadingStatus(REQUEST_RETURNED);

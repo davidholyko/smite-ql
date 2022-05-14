@@ -14,6 +14,21 @@ import { MatchCardPlatformIcon } from './MatchCardPlatformIcon';
 export const MatchCardPlayerGods = ({ gods, text, sx }) => {
   const id = useId();
 
+  const renderIgn = (player) => {
+    const { isProfileHidden, ign } = unparseIgn(player.ign);
+    const { platform } = player;
+
+    if (isProfileHidden) {
+      return <em>{ign}</em>;
+    }
+
+    return (
+      <Link to={ign} state={{ platform }} style={{ textDecoration: 'none' }}>
+        {ign}
+      </Link>
+    );
+  };
+
   return (
     <Container sx={sx}>
       <Typography variant="h6">{text}</Typography>
@@ -31,19 +46,10 @@ export const MatchCardPlayerGods = ({ gods, text, sx }) => {
             }}
           >
             {_.map(group, (player, index) => {
-              const { isProfileHidden, ign } = unparseIgn(player.ign);
               return (
                 <Box key={id + index} sx={{ display: 'flex', width: '250px' }}>
                   <MatchCardGodIcon godName={player.god} sx={{ marginRight: '15px' }} />
-                  <Typography variant="h6">
-                    {isProfileHidden ? (
-                      <em>{ign}</em>
-                    ) : (
-                      <Link to={ign} style={{ textDecoration: 'none' }}>
-                        {ign}
-                      </Link>
-                    )}
-                  </Typography>
+                  <Typography variant="h6">{renderIgn(player)}</Typography>
                   <Typography variant="superscript">
                     <MatchCardPlatformIcon platform={player.platform} style={{ height: '15px' }} />
                   </Typography>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes as Switch } from 'react-router-dom';
 
-import { Home, Player, History, Match, NotFound } from '../pages';
+import { Home, Player, Match, NotFound } from '../pages';
 
 export const Routes = () => {
   return (
@@ -12,8 +12,9 @@ export const Routes = () => {
           <Route path=":map" element={<Player />} />
         </Route>
       </Route>
-      <Route path="/history" element={<History />} />
-      <Route path="/match" element={<Match />} />
+      <Route path="/match" element={<Match />}>
+        <Route path=":matchId" element={<Match />} />
+      </Route>
       <Route path="/*" element={<NotFound />} />
     </Switch>
   );
