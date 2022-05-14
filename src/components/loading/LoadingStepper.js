@@ -19,8 +19,11 @@ export const LoadingStepper = ({ activeStep }) => {
     <Container sx={{ display: 'flex', alignItems: 'center', minHeight: '500px' }}>
       <Stepper activeStep={activeStep} alternativeLabel sx={{ width: '100%' }}>
         {map(steps, (label, index) => {
+          // when loading is complete, all will pulse
+          const className = classNames({ 'pulsing-step': activeStep === index || activeStep === 3 });
+
           return (
-            <Step className={classNames({ 'pulsing-step': activeStep === 1 && index === 1 })} key={label}>
+            <Step className={className} key={label}>
               <StepLabel>{label}</StepLabel>
             </Step>
           );
