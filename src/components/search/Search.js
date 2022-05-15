@@ -1,7 +1,6 @@
 import SearchIcon from '@mui/icons-material/Search';
 import Autocomplete from '@mui/material/Autocomplete';
 import Popper from '@mui/material/Popper';
-import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -20,8 +19,8 @@ export const Search = () => {
   const [searchText, setSearchText] = useState('');
   const previousSearches = useSelector((state) => state.settings.searchHistory);
 
-  const onChange = (event) => {
-    setSearchText(event.target.value);
+  const onInputChange = (_event, newValue) => {
+    setSearchText(newValue);
   };
 
   const onKeyDown = (event) => {
@@ -39,21 +38,16 @@ export const Search = () => {
       <Autocomplete
         id="search-player-auto-complete"
         disablePortal={true}
-        options={previousSearches}
-        theme={theme}
         freeSolo={true}
         getOptionLabel={(option) => String(option)}
         PopperComponent={CustomPopper}
-        renderInput={(params) => (
-          <SearchInput {...params} onChange={onChange} onKeyDown={onKeyDown} label="Search a player" />
-        )}
+        onInputChange={onInputChange}
+        onKeyDown={onKeyDown}
+        options={previousSearches}
+        value={searchText}
+        theme={theme}
+        renderInput={(params) => <SearchInput onKeyDown={onKeyDown} {...params} label="Search a player" />}
       />
     </SearchWrapper>
   );
-};
-
-Search.propTypes = {
-  onChange: PropTypes.func,
-  onKeyDown: PropTypes.func,
-  value: PropTypes.string,
 };
