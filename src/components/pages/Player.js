@@ -1,4 +1,3 @@
-import Container from '@mui/material/Container';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import React, { useEffect, useState } from 'react';
@@ -9,6 +8,7 @@ import { smiteConnector } from '../../api';
 import { LOADING_STATUSES } from '../../constants';
 import { savePlayerInfo } from '../../reducers/playerReducer';
 import { removePlayerIdSearch } from '../../reducers/settingsReducer';
+import { Page } from '../../styled-components/StyledPage';
 import { Footer } from '../footer';
 import { Header } from '../header';
 import { PlayerBanner, UpdateContentSection, MapDropdown, PlayerContent } from '../player';
@@ -24,8 +24,8 @@ const {
 export const Player = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-
   const { playerId, map } = useParams();
+
   const [loadingStatus, setLoadingStatus] = useState(NOT_LOADING);
   const [isUpdated, setIsUpdated] = useState(false);
   const [localPlayerInfo, setLocalPlayerInfo] = useState({});
@@ -109,16 +109,7 @@ export const Player = () => {
   }, [playerId, map]);
 
   return (
-    <Container
-      id="player-page"
-      sx={{
-        p: [0],
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-      maxWidth={false}
-    >
+    <Page id="player-page">
       <Header />
       <UpdateContentSection onClick={onClick} loadingStatus={loadingStatus} isUpdated={isUpdated} map={map} />
       <MapDropdown loadingStatus={loadingStatus} playerId={get(playerInfo, 'player.ign')} />
@@ -132,6 +123,6 @@ export const Player = () => {
         playerId={playerId}
       />
       <Footer />
-    </Container>
+    </Page>
   );
 };

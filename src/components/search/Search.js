@@ -8,8 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { theme } from '../../constants';
 import { savePlayerIdSearch } from '../../reducers/settingsReducer';
-
-import { SearchWrapper, SearchIconWrapper, SearchInput } from './styled-components';
+import { SearchWrapper, SearchIconWrapper, SearchInput } from '../../styled-components/StyledSearch';
 
 const CustomPopper = (props) => {
   return <Popper {...props} style={{ width: '100%' }} placement="bottom-start" />;

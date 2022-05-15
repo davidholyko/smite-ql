@@ -4,9 +4,9 @@ import Typography from '@mui/material/Typography';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useId } from 'react';
-import { Link } from 'react-router-dom';
 
 import { unparseIgn } from '../../helpers';
+import { Link } from '../../styled-components';
 
 import { MatchCardGodIcon } from './MatchCardGodIcon';
 import { MatchCardPlatformIcon } from './MatchCardPlatformIcon';
@@ -23,7 +23,7 @@ export const MatchCardPlayerGods = ({ gods, text, sx }) => {
     }
 
     return (
-      <Link to={ign} state={{ platform }} style={{ textDecoration: 'none' }}>
+      <Link to={ign} state={{ platform }}>
         {ign}
       </Link>
     );

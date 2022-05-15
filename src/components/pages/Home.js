@@ -3,11 +3,12 @@ import Typography from '@mui/material/Typography';
 import React from 'react';
 
 import { theme } from '../../constants';
+import { Page } from '../../styled-components';
 import { Search } from '../search';
 
 export const Home = () => {
   return (
-    <Container
+    <Page
       sx={{
         alignItems: 'center',
         backgroundColor: theme.palette.primary.main,
@@ -17,7 +18,6 @@ export const Home = () => {
         justifyContent: 'center',
         height: ['100vh'],
         width: ['100vw'],
-        maxWidth: ['100vw'],
       }}
     >
       <Container
@@ -33,6 +33,6 @@ export const Home = () => {
         <Typography>A high performance, low latency web application for Smite Match History</Typography>
       </Container>
       <Search />
-    </Container>
+    </Page>
   );
 };
