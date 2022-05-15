@@ -12,7 +12,7 @@ export const Footer = () => {
       sx={{
         backgroundColor: theme.palette.primary.dark,
         color: 'white',
-        maxWidth: '100vw',
+        maxWidth: ['100vw'],
         padding: '10px 10px 25px 10px',
         textAlign: 'center',
       }}
@@ -23,7 +23,7 @@ export const Footer = () => {
           display: 'flex',
           justifyContent: 'center',
           left: 0,
-          maxWidth: '100vw',
+          maxWidth: ['100vw'],
           padding: [0],
           position: 'absolute',
         }}
@@ -48,7 +48,7 @@ export const Footer = () => {
           display: 'flex',
           justifyContent: 'flex-end',
           left: 0,
-          maxWidth: '100vw',
+          maxWidth: ['100vw'],
           padding: [0],
           position: 'absolute',
         }}

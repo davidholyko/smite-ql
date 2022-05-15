@@ -32,7 +32,7 @@ export const App = () => {
     <Container
       id="app"
       sx={{
-        maxWidth: '100vw',
+        maxWidth: ['100vw'],
         overflowX: 'hidden',
         p: [0],
       }}

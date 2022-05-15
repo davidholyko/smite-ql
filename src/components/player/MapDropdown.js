@@ -52,7 +52,7 @@ export const MapDropdown = ({ playerId, loadingStatus }) => {
         display: 'flex',
         margin: '5px',
         justifyContent: 'center',
-        maxWidth: '100vw',
+        maxWidth: ['100vw'],
       }}
     >
       <Autocomplete

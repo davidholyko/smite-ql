@@ -35,7 +35,7 @@ export const UpdateContentSection = ({ onClick, loadingStatus, isUpdated, map })
         padding: '10px 15px',
         display: 'flex',
         justifyContent: 'center',
-        maxWidth: '100vw',
+        maxWidth: ['100vw'],
       }}
       theme={theme}
     >

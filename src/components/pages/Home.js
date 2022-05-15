@@ -17,7 +17,7 @@ export const Home = () => {
         justifyContent: 'center',
         height: ['100vh'],
         width: ['100vw'],
-        maxWidth: '100vw',
+        maxWidth: ['100vw'],
       }}
     >
       <Container
