@@ -1,5 +1,6 @@
 import SearchIcon from '@mui/icons-material/Search';
 import Autocomplete from '@mui/material/Autocomplete';
+import Popper from '@mui/material/Popper';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +10,10 @@ import { theme } from '../../constants';
 import { savePlayerIdSearch } from '../../reducers/settingsReducer';
 
 import { SearchWrapper, SearchIconWrapper, SearchInput } from './styled-components';
+
+const CustomPopper = (props) => {
+  return <Popper {...props} style={{ width: '100%' }} placement="bottom-start" />;
+};
 
 export const Search = () => {
   const navigate = useNavigate();
@@ -39,6 +44,7 @@ export const Search = () => {
         theme={theme}
         freeSolo={true}
         getOptionLabel={(option) => String(option)}
+        PopperComponent={CustomPopper}
         renderInput={(params) => (
           <SearchInput {...params} onChange={onChange} onKeyDown={onKeyDown} label="Search a player" />
         )}
