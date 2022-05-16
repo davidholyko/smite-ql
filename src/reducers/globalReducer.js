@@ -20,7 +20,8 @@ export const globalSlice = createSlice({
       state.patchVersion = action.payload;
     },
     saveMatchState: (state, action) => {
-      const [matchId, matchState] = entries(action.payload);
+      const [match] = entries(action.payload);
+      const [matchId, matchState] = match;
       state.matches[matchId] = matchState;
     },
   },

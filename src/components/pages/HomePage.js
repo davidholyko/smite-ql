@@ -6,7 +6,7 @@ import { theme } from '../../constants';
 import { Page } from '../../styled-components';
 import { Search } from '../search';
 
-export const Home = () => {
+export const HomePage = () => {
   return (
     <Page
       sx={{

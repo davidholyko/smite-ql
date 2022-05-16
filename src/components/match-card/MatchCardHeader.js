@@ -25,7 +25,7 @@ export const MatchCardHeader = ({ matchInfo }) => {
       }}
     >
       <Typography variant="h6">
-        ({matchInfo.map}) {matchInfo.matchId}
+        ({matchInfo.matchType}) {matchInfo.matchId}
       </Typography>
       <Typography variant="h6">{matchInfo.durationInMinutes} minutes</Typography>
       <Typography variant="h6">{date}</Typography>

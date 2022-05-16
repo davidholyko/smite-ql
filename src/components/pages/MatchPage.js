@@ -8,20 +8,23 @@ import { smiteConnector } from '../../api';
 import { saveMatchState } from '../../reducers/globalReducer';
 import { Page } from '../../styled-components/StyledPage';
 import { Header } from '../header';
+import { MatchPlayers } from '../match';
 
-export const Match = () => {
+export const MatchPage = () => {
   const dispatch = useDispatch();
   const { matchId } = useParams();
 
   const matchState = useSelector((state) => state.global.matches[matchId]) || {};
+
+  console.log('!!! matchState', matchState);
 
   const fetchData = async () => {
     if (!isEmpty(matchState)) {
       return;
     }
 
-    const data = await smiteConnector.getMatchInfo(matchId);
-    dispatch(saveMatchState(data));
+    const matchInfo = await smiteConnector.getMatchInfo(matchId);
+    dispatch(saveMatchState({ [matchId]: matchInfo }));
   };
 
   useEffect(() => {
@@ -31,7 +34,7 @@ export const Match = () => {
   return (
     <Page id="match-page">
       <Header />
-      {matchState.matchId}
+      <MatchPlayers players={matchState.players} />
     </Page>
   );
 };

@@ -1,21 +1,21 @@
 import React from 'react';
 import { Route, Routes as Switch } from 'react-router-dom';
 
-import { Home, Player, Match, NotFound } from '../pages';
+import { HomePage, PlayerPage, MatchPage, NotFoundPage } from '../pages';
 
 export const Routes = () => {
   return (
     <Switch>
-      <Route exact path="/" element={<Home />} />
-      <Route path="/player" element={<Player />}>
-        <Route path=":playerId" element={<Player />}>
-          <Route path=":map" element={<Player />} />
+      <Route exact path="/" element={<HomePage />} />
+      <Route path="/player" element={<PlayerPage />}>
+        <Route path=":playerId" element={<PlayerPage />}>
+          <Route path=":map" element={<PlayerPage />} />
         </Route>
       </Route>
-      <Route path="/match" element={<Match />}>
-        <Route path=":matchId" element={<Match />} />
+      <Route path="/match" element={<MatchPage />}>
+        <Route path=":matchId" element={<MatchPage />} />
       </Route>
-      <Route path="/*" element={<NotFound />} />
+      <Route path="/*" element={<NotFoundPage />} />
     </Switch>
   );
 };

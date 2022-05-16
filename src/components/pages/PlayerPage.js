@@ -21,7 +21,7 @@ const {
   PROCESS_COMPLETE, // 4
 } = LOADING_STATUSES;
 
-export const Player = () => {
+export const PlayerPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { playerId, map } = useParams();
