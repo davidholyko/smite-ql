@@ -6,6 +6,7 @@ export const CONSTANTS = {
     PING: 'ping',
     SMITE_QL: 'smite-ql',
     HISTORY: 'history',
+    REGEN: 'regen',
   },
 };
 

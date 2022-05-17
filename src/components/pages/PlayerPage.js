@@ -11,7 +11,7 @@ import { removePlayerIdSearch } from '../../reducers/settingsReducer';
 import { Page } from '../../styled-components/StyledPage';
 import { Footer } from '../footer';
 import { Header } from '../header';
-import { PlayerBanner, UpdateContentSection, MapDropdown, PlayerContent } from '../player';
+import { PlayerBanner, PlayerSnackBar, MapDropdown, PlayerContent } from '../player';
 
 const {
   NOT_LOADING, // 0
@@ -80,13 +80,28 @@ export const PlayerPage = () => {
     setLoadingStatus(PROCESS_COMPLETE);
   };
 
-  const onClick = async () => {
+  const onUpdateContent = async () => {
     setLoadingStatus(CACHE_LOOKUP);
 
-    const newPlayerInfo = await smiteConnector.getPlayerInfo(playerId, {
+    const options = {
       forceUpdate: true,
       platform: get(location, 'state.platform'),
-    });
+    };
+
+    // get latest data, regen the data, and the retrieve the data
+    const newPlayerInfo = await smiteConnector.getPlayerInfo(playerId, options);
+
+    newPlayerInfo && dispatch(savePlayerInfo({ ...newPlayerInfo, name: playerId }));
+    setIsUpdated(true);
+    setLoadingStatus(REQUEST_RETURNED);
+  };
+
+  const onRegenData = async () => {
+    setLoadingStatus(CACHE_LOOKUP);
+
+    // get latest data, regen the data, and the retrieve the data
+    await smiteConnector.regenPlayerMatches(playerId);
+    const newPlayerInfo = await smiteConnector.getPlayerInfo(playerId);
 
     newPlayerInfo && dispatch(savePlayerInfo({ ...newPlayerInfo, name: playerId }));
     setIsUpdated(true);
@@ -111,7 +126,13 @@ export const PlayerPage = () => {
   return (
     <Page id="player-page">
       <Header />
-      <UpdateContentSection onClick={onClick} loadingStatus={loadingStatus} isUpdated={isUpdated} map={map} />
+      <PlayerSnackBar
+        onRegenData={onRegenData}
+        onUpdateContent={onUpdateContent}
+        loadingStatus={loadingStatus}
+        isUpdated={isUpdated}
+        map={map}
+      />
       <MapDropdown loadingStatus={loadingStatus} playerId={get(playerInfo, 'player.ign')} />
       <PlayerBanner loadingStatus={loadingStatus} player={get(playerInfo, 'player')} />
       <PlayerContent

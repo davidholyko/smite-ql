@@ -6,7 +6,7 @@ import pickBy from 'lodash/pickBy';
 import { CONSTANTS } from '../constants';
 
 const { API } = CONSTANTS;
-const { URL, PING, SMITE_QL, HISTORY } = API;
+const { URL, PING, SMITE_QL, HISTORY, REGEN } = API;
 
 class SmiteConnector {
   async _processRequest(url) {
@@ -32,6 +32,13 @@ class SmiteConnector {
       url += `&${key}=${value}`;
     });
 
+    const response = await this._processRequest(url);
+
+    return response;
+  }
+
+  async regenPlayerMatches(playerId) {
+    const url = `${URL}/${REGEN}?player=${playerId}`;
     const response = await this._processRequest(url);
 
     return response;
