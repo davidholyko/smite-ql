@@ -16,8 +16,6 @@ export const MatchPage = () => {
 
   const matchState = useSelector((state) => state.global.matches[matchId]) || {};
 
-  console.log('!!! matchState', matchState);
-
   const fetchData = async () => {
     if (!isEmpty(matchState)) {
       return;

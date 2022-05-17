@@ -59,7 +59,7 @@ export const PlayerPage = () => {
     } catch (error_1) {
       try {
         // player does not exist in SmiteQL
-        if (error_1.message === `ERR Path '$.players.${playerId}' does not exist`) {
+        if (error_1.message === `Player history not found for ${playerId}`) {
           newPlayerInfo = await smiteConnector.getPlayerInfo(playerId, {
             forceUpdate: true,
             platform: get(location, 'state.platform'),

@@ -16,15 +16,15 @@ export const MatchCardPlayerGods = ({ gods, text, sx }) => {
 
   const renderIgn = (player) => {
     const { isProfileHidden, ign } = unparseIgn(player.ign);
-    const { platform } = player;
+    const { platform, rawIgn } = player;
 
     if (isProfileHidden) {
       return <em>{ign}</em>;
     }
 
     return (
-      <Link to={ign} state={{ platform }}>
-        {ign}
+      <Link to={rawIgn} state={{ platform }}>
+        {rawIgn}
       </Link>
     );
   };
