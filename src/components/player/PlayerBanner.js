@@ -19,6 +19,8 @@ const {
 } = LOADING_STATUSES;
 
 export const PlayerBanner = ({ player, loadingStatus }) => {
+  const lastLoginDate = moment(player.Last_Login_Datetime, MOMENT.HUMAN_TIME_FORMAT).fromNow();
+
   if (isEmpty(player)) {
     return null;
   }
@@ -26,8 +28,6 @@ export const PlayerBanner = ({ player, loadingStatus }) => {
   if (includes([CACHE_LOOKUP, REQUEST_IN_PROGRESS, REQUEST_RETURNED], loadingStatus)) {
     return null;
   }
-
-  const lastLoginDate = moment(player.Last_Login_Datetime, MOMENT.HUMAN_TIME_FORMAT).fromNow();
 
   return (
     <Container>

@@ -4,8 +4,6 @@ import React from 'react';
 import { PlaystationIcon, SteamIcon, XboxIcon, SwitchIcon, HirezIcon, EpicIcon } from '../icons';
 
 export const MatchCardPlatformIcon = ({ platform, style }) => {
-  // const style = { height: '15px' };
-
   switch (platform) {
     case 'HIREZ':
       return <HirezIcon style={style} />;
