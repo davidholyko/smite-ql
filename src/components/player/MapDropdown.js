@@ -21,14 +21,6 @@ const {
 const options = values(MAPS);
 
 export const MapDropdown = ({ playerId, loadingStatus }) => {
-  if (!playerId) {
-    return null;
-  }
-
-  if (includes([CACHE_LOOKUP, REQUEST_IN_PROGRESS, REQUEST_RETURNED], loadingStatus)) {
-    return null;
-  }
-
   const navigate = useNavigate();
   const [value, setValue] = React.useState(MAPS['CONQUEST']);
 
@@ -45,6 +37,14 @@ export const MapDropdown = ({ playerId, loadingStatus }) => {
       navigate(`/player/${playerId}/${value}`);
     }
   };
+
+  if (!playerId) {
+    return null;
+  }
+
+  if (includes([CACHE_LOOKUP, REQUEST_IN_PROGRESS, REQUEST_RETURNED], loadingStatus)) {
+    return null;
+  }
 
   return (
     <Container
