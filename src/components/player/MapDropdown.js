@@ -24,17 +24,19 @@ export const MapDropdown = ({ playerId, loadingStatus }) => {
   const navigate = useNavigate();
   const [value, setValue] = React.useState(MAPS['CONQUEST']);
 
-  const onClick = () => {
-    navigate(`/player/${playerId}/${value}`);
-  };
+  const normalize = (str) => str.replaceAll(' ', '_').replaceAll(':', '').toLowerCase();
 
   const onChange = (_event, newValue) => {
-    newValue && setValue(newValue.replaceAll(' ', '_').toLowerCase());
+    newValue && setValue(normalize(newValue));
+  };
+
+  const onClick = () => {
+    navigate(`/player/${playerId}/${normalize(value)}`);
   };
 
   const onKeyDown = (event) => {
     if (event.key === 'Enter') {
-      navigate(`/player/${playerId}/${value}`);
+      navigate(`/player/${playerId}/${normalize(value)}`);
     }
   };
 

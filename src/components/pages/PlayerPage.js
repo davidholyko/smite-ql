@@ -133,8 +133,14 @@ export const PlayerPage = () => {
         isUpdated={isUpdated}
         map={map}
       />
-      <MapDropdown loadingStatus={loadingStatus} playerId={get(playerInfo, 'player.ign')} />
-      <PlayerBanner loadingStatus={loadingStatus} player={get(playerInfo, 'player')} />
+      <MapDropdown
+        loadingStatus={loadingStatus}
+        playerId={get(playerInfo, 'player.ign', get(localPlayerInfo, 'player.ign'))}
+      />
+      <PlayerBanner
+        loadingStatus={loadingStatus}
+        player={!isEmpty(playerInfo) ? get(playerInfo, 'player') : get(localPlayerInfo, 'player')}
+      />
       <PlayerContent
         setLoadingStatus={setLoadingStatus}
         loadingStatus={loadingStatus}

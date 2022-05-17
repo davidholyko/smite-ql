@@ -17,14 +17,14 @@ export const MOMENT = {
 };
 
 export const MAPS = {
-  RANKED_CONQUEST: 'Ranked Conquest',
-  RANKED_JOUST: 'Ranked Joust',
-  RANKED_DUEL: 'Ranked Duel',
-  CONQUEST: 'Conquest',
-  JOUST: 'Joust',
-  ASSAULT: 'Assault',
-  ARENA: 'Arena',
-  SLASH: 'Slash',
+  RANKED_CONQUEST: 'Ranked: Conquest',
+  RANKED_JOUST: 'Ranked: Joust',
+  RANKED_DUEL: 'Ranked: Duel',
+  CONQUEST: 'Normal: Conquest',
+  JOUST: 'Normal: Joust',
+  ASSAULT: 'Normal: Assault',
+  ARENA: 'Normal: Arena',
+  SLASH: 'Normal: Slash',
 };
 
 export const LOADING_STATUSES = {
