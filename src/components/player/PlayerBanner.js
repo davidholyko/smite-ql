@@ -1,5 +1,6 @@
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import get from 'lodash/get';
 import includes from 'lodash/includes';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
@@ -19,7 +20,7 @@ const {
 } = LOADING_STATUSES;
 
 export const PlayerBanner = ({ player, loadingStatus }) => {
-  const lastLoginDate = moment(player.Last_Login_Datetime, MOMENT.HUMAN_TIME_FORMAT).fromNow();
+  const lastLoginDate = moment(get(player, 'Last_Login_Datetime'), MOMENT.HUMAN_TIME_FORMAT).fromNow();
 
   if (isEmpty(player)) {
     return null;
