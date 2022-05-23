@@ -4,11 +4,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+import { getPatchVersion } from '../../selectors';
+
 import { MatchCardGodIcon } from './MatchCardGodIcon';
 import { ItemsList } from './MatchCardItemsAndActives';
 
 export const MatchCardPlayerSection = ({ matchInfo }) => {
-  const patchVersion = useSelector((state) => state.global.patchVersion);
+  const patchVersion = useSelector(getPatchVersion());
   const kda = `${matchInfo.kills} / ${matchInfo.deaths} / ${matchInfo.assists}`;
 
   return (

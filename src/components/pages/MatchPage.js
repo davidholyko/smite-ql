@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 
 import { smiteConnector } from '../../api';
 import { saveMatchState } from '../../reducers/globalReducer';
+import { getMatchInfo } from '../../selectors';
 import { Page } from '../../styled-components/StyledPage';
 import { Header } from '../header';
 import { MatchPlayers } from '../match';
@@ -14,7 +15,7 @@ export const MatchPage = () => {
   const dispatch = useDispatch();
   const { matchId } = useParams();
 
-  const matchState = useSelector((state) => state.global.matches[matchId]) || {};
+  const matchState = useSelector(getMatchInfo(matchId));
 
   const fetchData = async () => {
     if (!isEmpty(matchState)) {

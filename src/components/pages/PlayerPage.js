@@ -6,8 +6,9 @@ import { useParams, useLocation } from 'react-router-dom';
 
 import { smiteConnector } from '../../api';
 import { LOADING_STATUSES } from '../../constants';
-import { savePlayerInfo } from '../../reducers/playerReducer';
+import { savePlayerInfo } from '../../reducers/playersReducer';
 import { removePlayerIdSearch } from '../../reducers/settingsReducer';
+import { getPatchVersion, getPlayer } from '../../selectors';
 import { Page } from '../../styled-components/StyledPage';
 import { Footer } from '../footer';
 import { Header } from '../header';
@@ -30,8 +31,8 @@ export const PlayerPage = () => {
   const [isUpdated, setIsUpdated] = useState(false);
   const [localPlayerInfo, setLocalPlayerInfo] = useState({});
 
-  const playerInfo = useSelector((state) => get(state, `player.player.${playerId}`, {}));
-  const patchVersion = useSelector((state) => get(state, `global.patchVersion`, ''));
+  const playerInfo = useSelector(getPlayer(playerId));
+  const patchVersion = useSelector(getPatchVersion());
 
   const fetchData = async () => {
     if (map) {

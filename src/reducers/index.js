@@ -1,11 +1,11 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
 import { globalReducer } from './globalReducer';
-import { playerReducer } from './playerReducer';
+import { playersReducer } from './playersReducer';
 import { settingsReducer } from './settingsReducer';
 
 export const rootReducer = combineReducers({
   global: globalReducer,
-  player: playerReducer,
+  players: playersReducer,
   settings: settingsReducer,
 });

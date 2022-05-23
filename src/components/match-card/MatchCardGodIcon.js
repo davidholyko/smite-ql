@@ -4,14 +4,15 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+import { getPatchVersion, getGodInfo } from '../../selectors';
 import { Sub } from '../../styled-components';
 
 import { MatchCardPlatformIcon } from './MatchCardPlatformIcon';
 
 export const MatchCardGodIcon = ({ godName, level, platform, sx, position = 'relative' }) => {
-  const patchVersion = useSelector((state) => state.global.patchVersion);
-  const name = godName.replaceAll(' ', '_');
-  const god = useSelector((state) => state.global.gods[patchVersion][name]);
+  const patchVersion = useSelector(getPatchVersion());
+  const god = godName.replaceAll(' ', '_');
+  const godInfo = useSelector(getGodInfo(patchVersion, god));
 
   return (
     <Box
@@ -40,8 +41,8 @@ export const MatchCardGodIcon = ({ godName, level, platform, sx, position = 'rel
         />
       )}
       <Avatar
-        alt={god.Name}
-        src={god.godIcon_URL}
+        alt={godInfo.Name}
+        src={godInfo.godIcon_URL}
         sx={{
           height: '40px',
           width: '40px',

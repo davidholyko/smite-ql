@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 import React, { useId } from 'react';
 import { useSelector } from 'react-redux';
 
+import { getPatchVersion } from '../../selectors';
+
 const IconPlaceHolder = () => {
   return (
     <Avatar id="icon-placeholder" variant="square" sx={{ borderRight: '1px solid black' }}>
@@ -61,7 +63,7 @@ ItemsList.propTypes = {
 };
 
 export const MatchCardItemsAndActives = ({ items, actives, sx }) => {
-  const patchVersion = useSelector((state) => state.global.patchVersion);
+  const patchVersion = useSelector(getPatchVersion());
 
   return (
     <Container

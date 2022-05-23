@@ -7,11 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { smiteConnector } from '../../api';
 import { saveGods, saveItems, savePatchVersion } from '../../reducers/globalReducer';
+import { getGlobal } from '../../selectors';
 import { Routes } from '../routes';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const globalState = useSelector((state) => state.global);
+  const globalState = useSelector(getGlobal());
 
   useEffect(() => {
     const fetchData = async () => {
