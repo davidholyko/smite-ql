@@ -34,8 +34,6 @@ export const PlayerPage = () => {
   const patchVersion = useSelector((state) => get(state, `global.patchVersion`, ''));
 
   const fetchData = async () => {
-    let newPlayerInfo = null;
-
     if (map) {
       setLoadingStatus(CACHE_LOOKUP);
       const newPlayerInfo = await smiteConnector.getPlayerInfo(playerId, { map });
@@ -49,32 +47,26 @@ export const PlayerPage = () => {
       return;
     }
 
-    // TODO: refactor this
-    // Attempt 1: get cached data
-    // Attempt 2: get new data
-    // Attempt 2 Failure: player does not actually exist
-    try {
-      setLoadingStatus(CACHE_LOOKUP);
-      newPlayerInfo = await smiteConnector.getPlayerInfo(playerId);
-    } catch (error_1) {
-      try {
-        // player does not exist in SmiteQL
-        if (error_1.message === `Player history not found for ${playerId}`) {
-          newPlayerInfo = await smiteConnector.getPlayerInfo(playerId, {
+    setLoadingStatus(CACHE_LOOKUP);
+    const newPlayerInfo = await smiteConnector
+      .getPlayerInfo(playerId)
+      .catch(async (error) => {
+        if (error.message === `Player history not found for ${playerId}`) {
+          const playerInfo = await smiteConnector.getPlayerInfo(playerId, {
             forceUpdate: true,
             platform: get(location, 'state.platform'),
           });
 
           setLoadingStatus(REQUEST_RETURNED);
+
+          return playerInfo;
         }
-      } catch (error_2) {
-        // player actually does not exist in Smite
-        // do not save in auto complete
-        if (error_2.message === `Player: ${playerId} does not exist.`) {
+      })
+      .catch((error) => {
+        if (error.message === `Player: ${playerId} does not exist.`) {
           dispatch(removePlayerIdSearch(playerId));
         }
-      }
-    }
+      });
 
     newPlayerInfo && dispatch(savePlayerInfo({ ...newPlayerInfo, name: playerId }));
     setLoadingStatus(PROCESS_COMPLETE);
