@@ -51,6 +51,9 @@ export const Footer = () => {
           maxWidth: ['100vw'],
           padding: [0],
           position: 'absolute',
+          // allow user to click underneath element
+          // which is the github link
+          pointerEvents: 'none',
         }}
       >
         <Typography variant="body2" sx={{ paddingX: '5px' }}>
