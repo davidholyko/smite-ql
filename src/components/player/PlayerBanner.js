@@ -43,7 +43,8 @@ export const PlayerBanner = ({ player, loadingStatus }) => {
           <sub style={{ fontFamily: 'none', fontSize: '10px' }}>LV</sub>
         </Typography>
         <Typography variant="h5" component="h5" sx={{ textAlign: 'center', padding: '5px' }}>
-          {player.MasteryLevel} ⭐
+          {player.MasteryLevel}
+          <sub style={{ fontFamily: 'none', fontSize: '10px' }}>⭐</sub>
         </Typography>
       </Container>
       <Container sx={{ display: 'flex', justifyContent: 'center' }}>

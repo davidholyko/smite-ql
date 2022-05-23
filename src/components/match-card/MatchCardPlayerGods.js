@@ -9,7 +9,6 @@ import { unparseIgn } from '../../helpers';
 import { Link } from '../../styled-components';
 
 import { MatchCardGodIcon } from './MatchCardGodIcon';
-import { MatchCardPlatformIcon } from './MatchCardPlatformIcon';
 
 export const MatchCardPlayerGods = ({ gods, text, sx }) => {
   const id = useId();
@@ -48,10 +47,9 @@ export const MatchCardPlayerGods = ({ gods, text, sx }) => {
             {_.map(group, (player, index) => {
               return (
                 <Box key={id + index} sx={{ display: 'flex', width: '250px' }}>
-                  <MatchCardGodIcon godName={player.god} sx={{ marginRight: '15px' }} />
-                  <Typography variant="h6">{renderIgn(player)}</Typography>
-                  <Typography variant="superscript">
-                    <MatchCardPlatformIcon platform={player.platform} style={{ height: '15px' }} />
+                  <MatchCardGodIcon godName={player.god} level={player.level} platform={player.platform} />
+                  <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
+                    {renderIgn(player)}
                   </Typography>
                 </Box>
               );

@@ -3,20 +3,20 @@ import React from 'react';
 
 import { PlaystationIcon, SteamIcon, XboxIcon, SwitchIcon, HirezIcon, EpicIcon } from '../icons';
 
-export const MatchCardPlatformIcon = ({ platform, style }) => {
+export const MatchCardPlatformIcon = ({ platform, sx }) => {
   switch (platform) {
     case 'HIREZ':
-      return <HirezIcon style={style} />;
+      return <HirezIcon style={sx} />;
     case 'PS4':
-      return <PlaystationIcon style={style} />;
+      return <PlaystationIcon style={sx} />;
     case 'SWITCH':
-      return <SwitchIcon style={style} />;
+      return <SwitchIcon style={sx} />;
     case 'STEAM':
-      return <SteamIcon style={style} />;
+      return <SteamIcon style={sx} />;
     case 'XBOX':
-      return <XboxIcon style={style} />;
+      return <XboxIcon style={sx} />;
     case 'EPIC':
-      return <EpicIcon style={style} />;
+      return <EpicIcon style={sx} />;
     default:
       return null;
   }
@@ -24,5 +24,5 @@ export const MatchCardPlatformIcon = ({ platform, style }) => {
 
 MatchCardPlatformIcon.propTypes = {
   platform: PropTypes.string,
-  style: PropTypes.object,
+  sx: PropTypes.object,
 };
