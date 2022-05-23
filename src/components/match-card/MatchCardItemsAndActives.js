@@ -1,6 +1,6 @@
 import Avatar from '@mui/material/Avatar';
 import Container from '@mui/material/Container';
-import Divider from '@mui/material/Divider';
+import get from 'lodash/get';
 import map from 'lodash/map';
 import range from 'lodash/range';
 import PropTypes from 'prop-types';
@@ -8,12 +8,16 @@ import React, { useId } from 'react';
 import { useSelector } from 'react-redux';
 
 const IconPlaceHolder = () => {
-  return <Avatar id="icon-placeholder" variant="square" />;
+  return (
+    <Avatar id="icon-placeholder" variant="square" sx={{ borderRight: '1px solid black' }}>
+      &nbsp;
+    </Avatar>
+  );
 };
 
 const ItemIcon = ({ name, patchVersion }) => {
   const item = useSelector((state) => state.global.items[patchVersion][name]);
-  return <Avatar id="item-icon" src={item.itemIcon_URL} variant="square" />;
+  return <Avatar id="item-icon" src={item.itemIcon_URL} variant="square" sx={{ borderRight: '1px solid black' }} />;
 };
 
 ItemIcon.propTypes = {
@@ -21,7 +25,7 @@ ItemIcon.propTypes = {
   patchVersion: PropTypes.string,
 };
 
-const ItemsList = ({ items, type, patchVersion }) => {
+export const ItemsList = ({ items, type, patchVersion, sx }) => {
   const id = useId();
   let limit = null;
 
@@ -35,17 +39,17 @@ const ItemsList = ({ items, type, patchVersion }) => {
   }
 
   return (
-    <React.Fragment>
+    <Container sx={sx}>
       {map(range(0, limit), (index) => {
-        const name = items[index];
+        const name = get(items, index, '').replaceAll(' ', '_');
 
         if (!name) {
           return <IconPlaceHolder key={id + index} />;
         }
 
-        return <ItemIcon key={id + index} name={name.replaceAll(' ', '_')} patchVersion={patchVersion} />;
+        return <ItemIcon key={id + index} name={name} patchVersion={patchVersion} />;
       })}
-    </React.Fragment>
+    </Container>
   );
 };
 
@@ -53,13 +57,22 @@ ItemsList.propTypes = {
   items: PropTypes.arrayOf(PropTypes.string),
   type: PropTypes.string,
   patchVersion: PropTypes.string,
+  sx: PropTypes.object,
 };
 
-export const MatchCardItemsAndActives = ({ items, actives, patchVersion }) => {
+export const MatchCardItemsAndActives = ({ items, actives, sx }) => {
+  const patchVersion = useSelector((state) => state.global.patchVersion);
+
   return (
-    <Container id="match-card-items-and-actives" component="div" sx={{ display: 'flex', justifyContent: 'center' }}>
+    <Container
+      id="match-card-items-and-actives"
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        ...sx,
+      }}
+    >
       <ItemsList items={items} type="items" patchVersion={patchVersion} />
-      <Divider orientation="vertical" sx={{ marginX: ['10px'] }} />
       <ItemsList items={actives} type="actives" patchVersion={patchVersion} />
     </Container>
   );
@@ -69,4 +82,5 @@ MatchCardItemsAndActives.propTypes = {
   items: PropTypes.arrayOf(PropTypes.string),
   actives: PropTypes.arrayOf(PropTypes.string),
   patchVersion: PropTypes.string,
+  sx: PropTypes.object,
 };

@@ -8,7 +8,7 @@ import { Sub } from '../../styled-components';
 
 import { MatchCardPlatformIcon } from './MatchCardPlatformIcon';
 
-export const MatchCardGodIcon = ({ godName, level, platform }) => {
+export const MatchCardGodIcon = ({ godName, level, platform, sx, position = 'relative' }) => {
   const patchVersion = useSelector((state) => state.global.patchVersion);
   const name = godName.replaceAll(' ', '_');
   const god = useSelector((state) => state.global.gods[patchVersion][name]);
@@ -19,44 +19,51 @@ export const MatchCardGodIcon = ({ godName, level, platform }) => {
       sx={{
         marginRight: '15px',
         display: 'flex',
-        position: 'relative',
+        position,
+        gridColumn: 1,
+        gridRow: 1,
       }}
     >
-      <MatchCardPlatformIcon
-        platform={platform}
-        sx={{
-          backgroundColor: 'white',
-          borderRadius: '50%',
-          bottom: '-5px',
-          height: '15px',
-          left: '-5px',
-          position: 'absolute',
-          width: '15px',
-          zIndex: 10,
-        }}
-      />
+      {platform && (
+        <MatchCardPlatformIcon
+          platform={platform}
+          sx={{
+            backgroundColor: 'white',
+            borderRadius: '50%',
+            bottom: '-5px',
+            height: '15px',
+            left: '-5px',
+            position: 'absolute',
+            width: '15px',
+            zIndex: 10,
+          }}
+        />
+      )}
       <Avatar
         alt={god.Name}
         src={god.godIcon_URL}
         sx={{
           height: '40px',
           width: '40px',
+          ...sx,
         }}
       />
-      <Sub
-        sx={{
-          backgroundColor: 'black',
-          borderRadius: '5px',
-          bottom: '-5px',
-          color: 'white',
-          padding: '1px 2px',
-          position: 'absolute',
-          right: '-5px',
-          zIndex: 10,
-        }}
-      >
-        {level}
-      </Sub>
+      {level && (
+        <Sub
+          sx={{
+            backgroundColor: 'black',
+            borderRadius: '5px',
+            bottom: '-5px',
+            color: 'white',
+            padding: '1px 2px',
+            position: 'absolute',
+            right: '-5px',
+            zIndex: 10,
+          }}
+        >
+          {level}
+        </Sub>
+      )}
     </Box>
   );
 };
@@ -66,4 +73,5 @@ MatchCardGodIcon.propTypes = {
   godName: PropTypes.string,
   platform: PropTypes.string,
   level: PropTypes.number,
+  position: PropTypes.string,
 };
