@@ -19,6 +19,19 @@ class SmiteConnector {
     return data.response;
   }
 
+  /**
+   *
+   * @returns {Boolean} - is smite api is available
+   */
+  async isSmiteApiAvailable() {
+    try {
+      await this.ping();
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
   async ping() {
     const url = `${URL}/${PING}`;
     const response = await this._processRequest(url);

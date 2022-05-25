@@ -1,13 +1,25 @@
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { smiteConnector } from '../../api';
 import { theme } from '../../constants';
 import { Search } from '../search';
 
 export const Header = () => {
+  const [isSmiteApiAvailable, setIsSmiteApiAvailable] = useState();
+
+  const fetchData = async () => {
+    const status = await smiteConnector.isSmiteApiAvailable();
+    setIsSmiteApiAvailable(status);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <AppBar position="static" sx={{ paddingY: '5px' }}>
       <Toolbar>
@@ -21,7 +33,7 @@ export const Header = () => {
           }}
         >
           <Link to="/" style={{ textDecoration: 'none', color: theme.palette.primary.contrastText }}>
-            SmiteQL
+            SmiteQL {isSmiteApiAvailable ? '🟢' : '🟡'}
           </Link>
         </Typography>
         <Search />
