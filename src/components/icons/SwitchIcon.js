@@ -5,6 +5,7 @@ export const SwitchIcon = (props) => {
     <svg
       {...props}
       xmlns="http://www.w3.org/2000/svg"
+      className="switch-svg"
       version="1.0"
       viewBox="0 0 900.000000 900.000000"
       preserveAspectRatio="xMidYMid meet"

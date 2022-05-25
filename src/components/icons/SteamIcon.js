@@ -2,7 +2,7 @@ import React from 'react';
 
 export const SteamIcon = (props) => {
   return (
-    <svg {...props} xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 233 233">
+    <svg {...props} className="steam-svg" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 233 233">
       <defs>
         <linearGradient id="a" x2="50%" x1="50%" y2="100%">
           <stop offset="0" />
