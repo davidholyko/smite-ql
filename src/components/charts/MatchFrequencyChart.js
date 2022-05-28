@@ -17,10 +17,7 @@ function createHeatMap(data, startYear, endYear) {
   // perform cleanup when making new heat maps
   d3.selectAll('svg').remove();
 
-  const width = 900;
-  const height = 110;
   const dx = 35;
-  const gridClass = 'js-date-grid day';
   const formatColor = d3
     .scaleQuantize()
     .domain([0, data.maxCount])
@@ -38,8 +35,8 @@ function createHeatMap(data, startYear, endYear) {
     .data(d3.range(startYear, endYear))
     .enter()
     .append('svg')
-    .attr('width', width)
-    .attr('height', height);
+    .attr('width', '780px')
+    .attr('height', '110px');
 
   // Add a grid for each day between the date range.
   const dates = Object.keys(data.dates);
@@ -50,7 +47,7 @@ function createHeatMap(data, startYear, endYear) {
     .select('#match-frequency-chart')
     .append('div')
     .attr('class', 'tooltip')
-    .style('display', 'block')
+    .style('display', 'none')
     .style('position', 'absolute')
     .style('background-color', 'white')
     .style('border', 'solid')
@@ -89,17 +86,32 @@ function createHeatMap(data, startYear, endYear) {
       .join('<br>');
 
     toolTip
-      .html(text) //
-      .style('left', `${xPosition - 50}px`)
-      .style('top', `${yPosition - 120}px`);
+      .html(text)
+      .style('left', `${xPosition - 75}px`)
+      .style('top', `${yPosition - 485}px`);
   }
 
-  // Add year label.
+  // Add days labels (Mon, Wed, Fri).
   rect
     .append('text')
-    .attr('transform', `translate(-9,${CELL_SIZE * 3.5})rotate(-90)`)
+    .attr('class', 'day-label')
+    .attr('transform', `translate(-10,${CELL_SIZE * 3.5 - 25})`)
     .style('text-anchor', 'middle')
-    .text((day) => day);
+    .text(() => 'Mon');
+
+  rect
+    .append('text')
+    .attr('class', 'day-label')
+    .attr('transform', `translate(-10,${CELL_SIZE * 3.5 + 4})`)
+    .style('text-anchor', 'middle')
+    .text(() => 'Wed');
+
+  rect
+    .append('text')
+    .attr('class', 'day-label')
+    .attr('transform', `translate(-10,${CELL_SIZE * 3.5 + 31})`)
+    .style('text-anchor', 'middle')
+    .text(() => 'Fri');
 
   // Add day squares
   rect
@@ -109,7 +121,7 @@ function createHeatMap(data, startYear, endYear) {
     .data((day) => d3.timeDays(new Date(day, 0, 1), new Date(day + 1, 0, 1)))
     .enter()
     .append('rect')
-    .attr('class', gridClass)
+    .attr('class', 'js-date-grid day')
     .attr('width', CELL_SIZE)
     .attr('height', CELL_SIZE)
     .attr('x', (data) => d3.timeFormat('%U')(data) * CELL_SIZE)
@@ -123,7 +135,7 @@ function createHeatMap(data, startYear, endYear) {
     .attr('date', (day) => day)
     // Add the colors to the grids.
     .filter((day) => dates.indexOf(day) > -1)
-    .attr('class', (d) => `${gridClass} ${formatColor(data.dates[d].difference)}`);
+    .attr('class', (d) => `js-date-grid day ${formatColor(data.dates[d].games)}`);
 
   // add on hover events to the heatmap
   d3.select('.js-heatmap') //
@@ -139,14 +151,15 @@ function createHeatMap(data, startYear, endYear) {
     .data([1])
     .enter()
     .append('svg')
-    .attr('width', 800)
+    .attr('width', '760px')
     .attr('height', 20)
     .append('g')
-    .attr('transform', 'translate(-33, 10)')
+    .attr('transform', 'translate(5, 10)')
     .selectAll('.month')
     .data(() => d3.range(12))
     .enter()
     .append('text')
+    .attr('class', 'month-label')
     .attr('x', (data) => data * (4.5 * CELL_SIZE) + dx)
     .attr('y', 5)
     .text((data) => d3.timeFormat('%b')(new Date(0, data + 1, 0)));
@@ -162,7 +175,7 @@ function createHeatMap(data, startYear, endYear) {
     .attr('width', 800)
     .attr('height', 20)
     .append('g')
-    .attr('transform', 'translate(595,0)')
+    .attr('transform', 'translate(655,0)')
     .selectAll('.legend-grid')
     .data(() => d3.range(7))
     .enter()
@@ -195,6 +208,7 @@ export const MatchFrequencyChart = () => {
         display: 'flex',
         flexDirection: 'column',
         margin: '30px',
+        transform: 'translate(-10px, 10px)',
       }}
     >
       <div className="js-months"></div>

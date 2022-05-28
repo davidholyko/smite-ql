@@ -11,7 +11,8 @@ export const CONSTANTS = {
 };
 
 export const MOMENT = {
-  HUMAN_TIME_FORMAT: 'M/D/YYYY h:mm:ss A',
+  HUMAN_TIME_FORMAT: 'MMMM Do YYYY, h:mm:ss a',
+  LAST_LOGIN_FORMAT: 'M/D/YYYY h:mm:ss A',
   CALENDAR_FORMAT: 'MMMM Do YYYY h:mm A',
   CHART_FORMAT: 'Y-MM-DD',
   SMITE_API_FORMAT: 'YYYYMMDDHHmmss',

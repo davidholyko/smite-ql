@@ -17,6 +17,7 @@ export const WinLossBar = ({ normal, ranked, overall }) => {
       sx={{
         display: 'flex',
         alignItems: 'center',
+        maxWidth: ['800px'],
       }}
     >
       <Box

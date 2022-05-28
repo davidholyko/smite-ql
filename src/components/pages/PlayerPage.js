@@ -10,7 +10,6 @@ import { savePlayerInfo } from '../../reducers/playersReducer';
 import { removePlayerIdSearch } from '../../reducers/settingsReducer';
 import { getPatchVersion, getPlayer } from '../../selectors';
 import { Page } from '../../styled-components/StyledPage';
-import { MatchFrequencyChart } from '../charts';
 import { Footer } from '../footer';
 import { Header } from '../header';
 import { PlayerBanner, PlayerSnackBar, MapDropdown, PlayerContent } from '../player';
@@ -118,7 +117,6 @@ export const PlayerPage = () => {
   return (
     <Page id="player-page">
       <Header />
-      <MatchFrequencyChart />
       <PlayerSnackBar
         onRegenData={onRegenData}
         onUpdateContent={onUpdateContent}

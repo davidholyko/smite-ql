@@ -9,6 +9,16 @@
   stroke-width: 3px;
 }
 
+.day-label {
+  font: 12px sans-serif;
+  shape-rendering: crispEdges;
+}
+
+.month-label {
+  font: 12px sans-serif;
+  shape-rendering: crispEdges;
+}
+
 .color-0 {
   fill: #d6e685;
 }
