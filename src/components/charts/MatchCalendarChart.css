@@ -1,8 +1,3 @@
-.match-history-chart-container {
-  font: 10px sans-serif;
-  shape-rendering: crispEdges;
-}
-
 .day {
   fill: #eee;
   stroke: #fff;

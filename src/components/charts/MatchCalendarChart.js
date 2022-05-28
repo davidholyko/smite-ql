@@ -13,7 +13,24 @@ import './MatchCalendarChart.css';
 const NUMBER_OF_COLORS = 6;
 const CELL_SIZE = 14;
 
+function getMousePosition(event) {
+  // const html = document.documentElement;
+  // console.log(html);
+  const chart = document.querySelector('.js-heatmap').getBoundingClientRect();
+  const square = event.target.getBoundingClientRect();
+
+  return [
+    // event.pageX + window.pageXOffset - html.clientLeft,
+    // event.pageY + window.pageYOffset - html.clientTop, //
+    square.x - chart.x,
+    square.y - chart.y,
+  ];
+}
+
 function buildCalendarChart(data, startYear, endYear) {
+  // perform cleanup when making new heat maps
+  d3.selectAll('svg').remove();
+
   const dx = 35;
   const formatColor = d3
     .scaleQuantize()
@@ -41,16 +58,18 @@ function buildCalendarChart(data, startYear, endYear) {
 
   // create a tooltip
   const toolTip = d3
-    .select('#match-frequency-chart')
+    .select('#match-calendar-chart-heatmap')
     .append('div')
     .attr('class', 'tooltip')
     .style('display', 'none')
-    .style('position', 'absolute')
+    .style('position', 'fixed')
+    .style('top', '0')
+    .style('left', '0')
     .style('background-color', 'white')
     .style('border', 'solid')
     .style('border-width', '1px')
     .style('border-radius', '3px')
-    .style('padding', '10px');
+    .style('padding', '10px 20px');
 
   function onMouseOver(event) {
     const titleInfo = event.target.getAttribute('title');
@@ -71,7 +90,7 @@ function buildCalendarChart(data, startYear, endYear) {
   }
 
   function onMouseMove(event) {
-    const [xPosition, yPosition] = [event.pageX, event.pageY];
+    const [xPosition, yPosition] = getMousePosition(event);
     const titleInfo = event.target.getAttribute('title');
 
     if (!titleInfo) {
@@ -83,9 +102,9 @@ function buildCalendarChart(data, startYear, endYear) {
       .join('<br>');
 
     toolTip
-      .html(text)
-      .style('left', `${xPosition - 75}px`)
-      .style('top', `${yPosition - 485}px`);
+      .html(text) //
+      .style('left', `${xPosition - 50}px`)
+      .style('top', `${yPosition - 100}px`);
   }
 
   // Add days labels (Mon, Wed, Fri).
@@ -135,7 +154,8 @@ function buildCalendarChart(data, startYear, endYear) {
     .attr('class', (d) => `js-date-grid day ${formatColor(data.dates[d].games)}`);
 
   // add on hover events to the heatmap
-  d3.select('.js-heatmap') //
+  d3.select('svg')
+    .selectAll('rect')
     .on('mouseover', onMouseOver)
     .on('mousemove', onMouseMove)
     .on('mouseleave', onMouseLeave);
@@ -204,18 +224,19 @@ export const MatchCalendarChart = () => {
 
   return (
     <div
-      className="match-frequency-chart-container"
+      id="match-calendar-chart-container"
       style={{
         alignItems: 'center',
         display: 'flex',
         flexDirection: 'column',
-        margin: '30px',
+        margin: '30px auto',
         transform: 'translate(-10px, 10px)',
+        width: '780px',
       }}
     >
-      <div className="js-months"></div>
-      <div id="match-frequency-chart" className="js-heatmap"></div>
-      <div className="js-legend"></div>
+      <div id="match-calendar-chart-months-legend" className="js-months"></div>
+      <div id="match-calendar-chart-heatmap" className="js-heatmap"></div>
+      <div id="match-calendar-chart-scale-legend" className="js-legend"></div>
     </div>
   );
 };
