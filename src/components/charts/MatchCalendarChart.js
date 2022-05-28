@@ -14,17 +14,10 @@ const NUMBER_OF_COLORS = 6;
 const CELL_SIZE = 14;
 
 function getMousePosition(event) {
-  // const html = document.documentElement;
-  // console.log(html);
   const chart = document.querySelector('.js-heatmap').getBoundingClientRect();
   const square = event.target.getBoundingClientRect();
 
-  return [
-    // event.pageX + window.pageXOffset - html.clientLeft,
-    // event.pageY + window.pageYOffset - html.clientTop, //
-    square.x - chart.x,
-    square.y - chart.y,
-  ];
+  return [square.x - chart.x, square.y - chart.y];
 }
 
 function buildCalendarChart(data, startYear, endYear) {
@@ -156,7 +149,8 @@ function buildCalendarChart(data, startYear, endYear) {
     .attr('class', (d) => `js-date-grid day ${formatColor(data.dates[d].games)}`);
 
   // add on hover events to the heatmap
-  d3.select('svg')
+  d3.select('#match-calendar-chart-heatmap')
+    .select('svg')
     .selectAll('rect')
     .on('mouseover', onMouseOver)
     .on('mousemove', onMouseMove)
@@ -217,11 +211,6 @@ export const MatchCalendarChart = () => {
 
   useEffect(() => {
     fetchData();
-
-    () => {
-      // perform cleanup when making new heat maps
-      d3.selectAll('svg').remove();
-    };
   }, [playerId]);
 
   return (
