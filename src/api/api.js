@@ -32,12 +32,22 @@ class SmiteConnector {
     }
   }
 
+  /**
+   *
+   * @returns {Object} - response
+   */
   async ping() {
     const url = `${URL}/${PING}`;
     const response = await this._processRequest(url);
     return response;
   }
 
+  /**
+   *
+   * @param {String} playerId
+   * @param {Object} options - optional query params
+   * @returns
+   */
   async getPlayerInfo(playerId, options) {
     let url = `${URL}/${HISTORY}?player=${playerId}`;
 
@@ -45,6 +55,14 @@ class SmiteConnector {
       url += `&${key}=${value}`;
     });
 
+    const response = await this._processRequest(url);
+
+    return response;
+  }
+
+  async getMatches(playerId) {
+    const redisPlayerId = `__${playerId.toLowerCase()}__`;
+    const url = `${URL}/${SMITE_QL}?path=players.${redisPlayerId}.matches`;
     const response = await this._processRequest(url);
 
     return response;

@@ -10,6 +10,7 @@ import { savePlayerInfo } from '../../reducers/playersReducer';
 import { removePlayerIdSearch } from '../../reducers/settingsReducer';
 import { getPatchVersion, getPlayer } from '../../selectors';
 import { Page } from '../../styled-components/StyledPage';
+import { MatchFrequencyChart } from '../charts';
 import { Footer } from '../footer';
 import { Header } from '../header';
 import { PlayerBanner, PlayerSnackBar, MapDropdown, PlayerContent } from '../player';
@@ -51,17 +52,15 @@ export const PlayerPage = () => {
     setLoadingStatus(CACHE_LOOKUP);
     const newPlayerInfo = await smiteConnector
       .getPlayerInfo(playerId)
-      .catch(async (error) => {
-        if (error.message === `Player history not found for ${playerId}`) {
-          const playerInfo = await smiteConnector.getPlayerInfo(playerId, {
-            forceUpdate: true,
-            platform: get(location, 'state.platform'),
-          });
+      .catch(async () => {
+        const playerInfo = await smiteConnector.getPlayerInfo(playerId, {
+          forceUpdate: true,
+          platform: get(location, 'state.platform'),
+        });
 
-          setLoadingStatus(REQUEST_RETURNED);
+        setLoadingStatus(REQUEST_RETURNED);
 
-          return playerInfo;
-        }
+        return playerInfo;
       })
       .catch((error) => {
         if (error.message === `Player: ${playerId} does not exist.`) {
@@ -119,6 +118,7 @@ export const PlayerPage = () => {
   return (
     <Page id="player-page">
       <Header />
+      <MatchFrequencyChart />
       <PlayerSnackBar
         onRegenData={onRegenData}
         onUpdateContent={onUpdateContent}

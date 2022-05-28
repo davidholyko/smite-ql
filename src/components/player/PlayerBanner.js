@@ -20,7 +20,10 @@ const {
 } = LOADING_STATUSES;
 
 export const PlayerBanner = ({ player, loadingStatus }) => {
-  const lastLoginDate = moment(get(player, 'Last_Login_Datetime'), MOMENT.HUMAN_TIME_FORMAT).fromNow();
+  // TODO: move logic to localize time to a helper
+  const timezoneOffset = moment().utcOffset();
+  const lastLoginDate = get(player, 'Last_Login_Datetime');
+  const lastLogin = moment(lastLoginDate, MOMENT.HUMAN_TIME_FORMAT).add(timezoneOffset, 'minutes').fromNow();
 
   if (isEmpty(player)) {
     return null;
@@ -49,7 +52,7 @@ export const PlayerBanner = ({ player, loadingStatus }) => {
       </Container>
       <Container sx={{ display: 'flex', justifyContent: 'center' }}>
         <Typography variant="h6" component="h6" sx={{ textAlign: 'center', padding: '5px' }}>
-          Last Online: {lastLoginDate}
+          Last Online: {lastLogin}
         </Typography>
       </Container>
     </Container>

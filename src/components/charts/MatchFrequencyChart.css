@@ -1,0 +1,80 @@
+.match-history-chart-container {
+  font: 10px sans-serif;
+  shape-rendering: crispEdges;
+}
+
+.day {
+  fill: #eee;
+  stroke: #fff;
+  stroke-width: 3px;
+}
+
+.color-0 {
+  fill: #d6e685;
+}
+
+.color-1 {
+  fill: #44a340;
+}
+
+.color-2 {
+  fill: #28752d;
+}
+
+.color-3 {
+  fill: #1e6823;
+}
+
+.color-4 {
+  fill: #365e2f;
+}
+
+.color-5 {
+  fill: #144e12;
+}
+
+/* colors are from */
+/* https://yeun.github.io/open-color/ */
+
+/* GREENS */
+.win-1 {
+  fill: #e6fcf5;
+}
+
+.win-2 {
+  fill: #b2f2bb;
+}
+
+.win-3 {
+  fill: #69db7c;
+}
+
+.win-4 {
+  fill: #40c057;
+}
+
+.win-5 {
+  fill: #2f9e44;
+}
+
+/* REDS */
+
+.loss-1 {
+  fill: #ffe3e3;
+}
+
+.loss-2 {
+  fill: #ffa8a8;
+}
+
+.loss-3 {
+  fill: #ff6b6b;
+}
+
+.loss-4 {
+  fill: #f03e3e;
+}
+
+.loss-5 {
+  fill: #c92a2a;
+}
