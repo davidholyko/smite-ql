@@ -49,7 +49,7 @@ export const toMatchFrequencyFormat = (matches) => {
       output[localDate].difference++;
       output[localDate].games++;
     } else {
-      output[localDate].losses--;
+      output[localDate].losses++;
       output[localDate].difference--;
       output[localDate].games++;
     }

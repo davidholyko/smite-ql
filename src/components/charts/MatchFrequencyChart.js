@@ -14,6 +14,9 @@ const NUMBER_OF_COLORS = 6;
 const CELL_SIZE = 14;
 
 function createHeatMap(data, startYear, endYear) {
+  // perform cleanup when making new heat maps
+  d3.selectAll('svg').remove();
+
   const width = 900;
   const height = 110;
   const dx = 35;
@@ -182,12 +185,11 @@ export const MatchFrequencyChart = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [playerId]);
 
   return (
     <div
       className="match-frequency-chart-container"
-      // key={Math.random()}
       style={{
         alignItems: 'center',
         display: 'flex',
