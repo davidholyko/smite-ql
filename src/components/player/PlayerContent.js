@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 
 import { LOADING_STATUSES } from '../../constants';
-import { MatchFrequencyChart } from '../charts';
+import { MatchCalendarChart } from '../charts';
 import { LoadingStepper } from '../loading';
 import { MatchCards } from '../match-card';
 
@@ -70,6 +70,7 @@ export const PlayerContent = ({
     default:
       content = (
         <React.Fragment>
+          <MatchCalendarChart />
           <WinLossBar overall={overall} ranked={ranked} normal={normal} />
           <MatchCards matches={matches} history={history} />
         </React.Fragment>
@@ -78,7 +79,6 @@ export const PlayerContent = ({
 
   return (
     <Container id="player-content" sx={{ flexGrow: 1 }}>
-      <MatchFrequencyChart />
       {content}
     </Container>
   );

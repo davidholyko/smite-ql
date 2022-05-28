@@ -1,1 +1,1 @@
-export * from './MatchFrequencyChart';
+export * from './MatchCalendarChart';

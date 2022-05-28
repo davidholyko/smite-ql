@@ -18,7 +18,7 @@ export const toLocalTime = (momentObject) => {
  * @param {Object} matches - object with keys being a matchId and value being matchInfo
  * @returns {Object} data - object with keys being date
  */
-export const toMatchFrequencyFormat = (matches) => {
+export const toMatchCalendarFormat = (matches) => {
   const output = {
     // example:
     // '2022-01-25': {

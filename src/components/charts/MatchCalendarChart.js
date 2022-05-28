@@ -4,19 +4,16 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { smiteConnector } from '../../api';
-import { toMatchFrequencyFormat } from '../../helpers';
+import { toMatchCalendarFormat } from '../../helpers';
 
-import './MatchFrequencyChart.css';
+import './MatchCalendarChart.css';
 
 // inspired by https://github.com/vinnyoodles/reddit-heatmap
 
 const NUMBER_OF_COLORS = 6;
 const CELL_SIZE = 14;
 
-function createHeatMap(data, startYear, endYear) {
-  // perform cleanup when making new heat maps
-  d3.selectAll('svg').remove();
-
+function buildCalendarChart(data, startYear, endYear) {
   const dx = 35;
   const formatColor = d3
     .scaleQuantize()
@@ -186,18 +183,23 @@ function createHeatMap(data, startYear, endYear) {
     .attr('class', (data) => `day color-${data - 1}`);
 }
 
-export const MatchFrequencyChart = () => {
+export const MatchCalendarChart = () => {
   const { playerId } = useParams();
 
   const fetchData = async () => {
     const parsedMatches = await smiteConnector.getMatches(playerId);
-    const dates = toMatchFrequencyFormat(parsedMatches);
+    const dates = toMatchCalendarFormat(parsedMatches);
 
-    createHeatMap({ maxCount: 5, dates }, 2022, 2023);
+    buildCalendarChart({ maxCount: 5, dates }, 2022, 2023);
   };
 
   useEffect(() => {
     fetchData();
+
+    () => {
+      // perform cleanup when making new heat maps
+      d3.selectAll('svg').remove();
+    };
   }, [playerId]);
 
   return (
