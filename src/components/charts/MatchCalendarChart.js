@@ -29,7 +29,9 @@ function getMousePosition(event) {
 
 function buildCalendarChart(data, startYear, endYear) {
   // perform cleanup when making new heat maps
-  d3.selectAll('svg').remove();
+  d3.select('#match-calendar-chart-container') //
+    .selectAll('svg')
+    .remove();
 
   const dx = 35;
   const formatColor = d3
