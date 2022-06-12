@@ -1,1 +1,1 @@
-export * from './MatchPlayers';
+export * from './MatchReportTable';

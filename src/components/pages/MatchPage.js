@@ -9,7 +9,7 @@ import { saveMatchState } from '../../reducers/globalReducer';
 import { getMatchInfo } from '../../selectors';
 import { Page } from '../../styled-components/StyledPage';
 import { Header } from '../header';
-import { MatchPlayers } from '../match';
+import { MatchReportTable } from '../match';
 
 export const MatchPage = () => {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ export const MatchPage = () => {
   return (
     <Page id="match-page">
       <Header />
-      <MatchPlayers players={matchState.players} />
+      <MatchReportTable players={matchState.players} />
     </Page>
   );
 };
